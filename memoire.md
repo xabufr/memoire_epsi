@@ -8,8 +8,8 @@ Idée de plan :
  * Présentation de l'entreprise
  * Présentation du produit existant
  * Ce qui motive cette migration
- * A court terme
- * A plus long terme
+    * A court terme
+    * A plus long terme
  * Présentation du Cloud d'Amazon
  * S.W.O.T.
  * Estimation des coûts – Coûts possibles chez les concurrents (OVH, Google, Azure) – Étude du marché
@@ -25,11 +25,14 @@ Idée de plan :
 
 #Présentation du produit existant
 Keepalert est une plate-forme de surveillance de marques sur internet décomposée en 4 modules indépendants proposant différents types de protection :
-Le module noms de domaine protège les marques des sites de cyber-squatting et de contre-façon. Ce module collecte diverses données, dont:
+Le module noms de domaine protège les marques des sites de cyber-squatting et de contrefaçon. Ce module collecte diverses données, dont:
 
- * Les données Whois
- * Des captures d'écran des sites
- * Des adresses I.P.
+ * Les données Whois,\footnote{
+ Contraction de l'Anglais Who Is.
+ Ces données sont fournies par les registres de noms de domaine, et permettent d'en récupérer les données légales et techniques comme la date du dépôt, à qui appartient le domaine, les coordonnées des entités le gérant, etc.
+ }
+ * Des captures d'écran des sites,
+ * Des adresses I.P,
  * Le contenu HTML des pages,
  * Le module Web 2 surveille les réseaux sociaux (Facebook, Youtube, Référencement de sites dans les moteurs de recherche, …), qui reprend la plupart des données collectées dans le module Noms de domaine,
  * Le module de marquage de page, qui collecte et analyse la provenance des visiteurs sur les sites officiel de nos clients,
@@ -44,19 +47,19 @@ Cette architecture imaginée il y a de cela plus de 7 ans, bien que fonctionnell
  * En termes de stockage des données, la taille de la base contenant les données récoltées est trop importante pour en modifier la structure, 
    il nous est donc impossible de proposer de nouveaux indicateurs pour nous démarquer de la concurrence (stockage HTML, contenu textuel, identifiants Ad Sence),
  * La production d'études plus volumineuses nous est impossible dans des délais raisonnables, et bloque la production des autres études,
- * Le moteur de base de données utilisé ne propose pas par défaut de moteur de recherche satisfaisant, une solution annexe basée sur SOLR a due être mise en place (pour faire des recherches sur le HTML des pages récoltées).
+ * Le moteur de base de données utilisé ne propose pas par défaut de moteur de recherche satisfaisant, une solution annexe basée sur SOLR a due être mise en place (pour faire des recherches sur le HTML des pages récoltées),
  * Les différentes étapes de récoltes étant totalement séparées, il arrive qu'une étude reste incomplète en fin de traitement en raison de la complexité de l'architecture (notamment pour les captures d'écran).
 
 Notre objectif à court terme est de nous affranchir ces limites. 
 
 Cette migration doit nous permettre de fournir des résultats rapides et complets pour n'importe quelle taille d'étude. 
-Nous devons également être en mesure d'exploiter cette masse de données, notamment par le biais de la recherche full-text.
+Nous devons également être en mesure d'exploiter cette masse de données, notamment par le biais de la recherche full-text\footnote{TODO}.
 
 Mais cette démarche est aussi motivée par un objectif de refonte sur le long terme :
 
  * La mise à disposition d'une API RESTFUL pour nos clients (qui ne fait pas partie de ce mémoire),
- * L'enrichissement des études via de nouvelles données (classement du site, sauvegarde des entrées DNS MX, etc)
- * L'enrichissement des études via l'indexation du rendu du site (pour proposer par exemple une recherche par logo de marque)
+ * L'enrichissement des études via de nouvelles données (classement du site, sauvegarde des entrées DNS MX, etc),
+ * L'enrichissement des études via l'indexation du rendu du site (pour proposer par exemple une recherche par logo de marque).
 
 Afin d'atteindre ces objectifs, une refonte du cœur de la plate-forme est nécessaire :
 
@@ -125,7 +128,7 @@ Ce service (abrégé EC2) permet de louer à l'heure des machines virtuelles aux
 
 Chaque type d'instance est nommé d'après le schéma suivant (Type)(Génération).(Taille).
 Par exemple, il existe des instances d'usage général (M), optimisées calcul (C), ou encore optimisées pour la mémoire (R).
-Ainsi une instance d'usage général, de 3ème génération (la génération actuelle) de taille large sera nommée m3.medium. 
+Ainsi une instance d'usage général, de 3ème génération (la génération actuelle) de taille large sera nommée `m3.medium`. 
 
 Le tableau listant toutes les instances existantes est disponible sur <https://aws.amazon.com/fr/ec2/instance-types/>.
 
@@ -159,12 +162,12 @@ Par exemple, en Irelande le rapatriement de données depuis Internet coûte $0,0
 //TODO → Parler AMI ? EBS ? Instance-store ? HVM/PV ?
 
 ##Amazon Simple Storage Service
-Abrégé S3, le service de stockage d'Amazon permet de sauvegarder durablement dans son cloud des données arbitraires à prix réduit, et avec une durabilité de l'ordre de 99,999999999 % et une disponilité de 99,99 % sur un an.
+Abrégé S3, le service de stockage d'Amazon permet de sauvegarder durablement dans son cloud des données arbitraires à prix réduit, et avec une durabilité de l'ordre de 99,999999999 % et une disponibilité de 99,99 % sur un an.
 
 Les données sont stockées dans une région, et dupliquées dans plusieurs data-center (de façon à pouvoir supporter la perte de deux centres de données).
 
 Ce service est en réalité propulsé par un moteur de base de données de type clé/valeur.  
-Il est donc possible de nommer ses données de manière hérarchisée, comme sur un système de fichier classique (par exemple : dossier/autre_dossier/mon_fichier).
+Il est donc possible de nommer ses données de manière hiérarchisée, comme sur un système de fichier classique (par exemple : `dossier/autre_dossier/mon_fichier`).
 
 Afin d'utiliser ce service, il est nécessaire de créer un dépôt de données (bucket dans la terminologie  AWS). 
 L'espace disponible dans un bucket est virtuellement illimité (on estime à 2 000 000 000 000 – deux billions le nombre d'objets stocké en Mars 2013… il y a 2 ans !), 
@@ -185,6 +188,17 @@ En plus du stockage sont facturés les requêtes d'insertion de données, de lis
 Pour plus de détails sur les tarifs en vigueur consultez la grille tarifaire sur <https://aws.amazon.com/fr/s3/pricing/>. 
 
 ##Amazon Elastic MapReduce
-Ce service s'appuie sur EC2 lancer et configurer des instances avec Hadoop, un Framework de calcul distribué très connu basé sur Map-Reduce. 
+Ce service s'appuie sur EC2 pour lancer et configurer des instances avec Hadoop, un Framework\footnote{TODO} de calcul distribué très connu basé sur MapReduce (nous en reparlerons plus loin). 
 
-Il permet de faire abstraction de la configuration des machines, de hadoop. Il permet également d'utiliser Amazon S3 comme espace de stockage pour les données des tâches à effectuer (aussi bien en entré qu'en sortie).
+Il permet de faire abstraction de la configuration des machines virtuelles et de Hadoop.
+
+Il permet également d'utiliser Amazon S3 comme espace de stockage pour les données des tâches à effectuer (aussi bien en entrée qu'en sortie).
+
+Afin d'utiliser ce service, il est nécessaire de spécifier dans quelle région les instances EC2 doivent être lancées, ainsi que leur type et leur nombre.
+Les instances du cluster peuvent avoir 3 rôles différents:
+
+ * La machine Master,
+ * Les machines Core,
+ * Les machines Task.
+
+#SWOT
