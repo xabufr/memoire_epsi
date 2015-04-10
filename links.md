@@ -3,3 +3,4 @@
 <http://escience.washington.edu/blog/cloud-economics-visualizing-aws-prices-over-time>
 <https://setandbma.wordpress.com/2012/03/08/amazon-aws-price-reduction/>
 <https://aws.amazon.com/fr/blogs/aws/category/price-reduction/>
+<http://aws.typepad.com/aws/price-reduction/>
