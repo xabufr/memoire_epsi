@@ -188,17 +188,68 @@ En plus du stockage sont facturés les requêtes d'insertion de données, de lis
 Pour plus de détails sur les tarifs en vigueur consultez la grille tarifaire sur <https://aws.amazon.com/fr/s3/pricing/>. 
 
 ##Amazon Elastic MapReduce
-Ce service s'appuie sur EC2 pour lancer et configurer des instances avec Hadoop, un Framework\footnote{TODO} de calcul distribué très connu basé sur MapReduce (nous en reparlerons plus loin). 
+Ce service s'appuie sur EC2 pour lancer et configurer des instances avec Hadoop, un Framework\footnote{TODO} de calcul distribué très connu basé sur MapReduce. 
 
-Il permet de faire abstraction de la configuration des machines virtuelles et de Hadoop.
+Il permet de faire abstraction de la configuration des machines virtuelles et de Hadoop : il suffit de spécifier le nombre de machines à utiliser et les tâches à accomplir, le service s'occupe du reste.
 
-Il permet également d'utiliser Amazon S3 comme espace de stockage pour les données des tâches à effectuer (aussi bien en entrée qu'en sortie).
+Il permet également d'utiliser Amazon S3 comme espace de stockage pour les données des tâches à effectuer (aussi bien en entrée qu'en sortie) en lieu et place d'HDFS, le système de fichier d'Hadoop.
 
 Afin d'utiliser ce service, il est nécessaire de spécifier dans quelle région les instances EC2 doivent être lancées, ainsi que leur type et leur nombre.
 Les instances du cluster peuvent avoir 3 rôles différents:
 
- * La machine Master,
- * Les machines Core,
- * Les machines Task.
+ * La machine Master, chef d'orchestre du cluster,
+ * Les machines Core, qui en plus des calculs à effectuer stockent une partie des données de la partition HDFS partagée,
+ * Les machines Task qui ne font que des calculs.
 
-#SWOT
+Il est possible de redimenssionner le cluster en cours de route:
+
+ * En ajoutant des machines de type Core ou Task,
+ * Les nœuds de type Master et Core ne peuvent être supprimés sans mettre en péril le cluster de calcul, contrairement aux nœuds de type Task.
+
+Le tarif appliqué à ce service correspond au tarif des ressources sous-jacentes utilisée (les machines EC2), plus une taxe dépendant du type de machine.
+Pour plus d'informations vous pouvez consulter la grille tarifaire sur <http://aws.amazon.com/fr/elasticmapreduce/pricing/>
+
+#SWOT - Forces - Faiblesse - Opportunités - Menaces
+
+Le fait de migrer une partie de notre infrastructure vers le cloud d'Amazon va induire de nouveaux points forts, de nouveaux points faibles, et donc créer des opportunités et menaces.
+
+##Forces
+
+Toute la puissance du cloud réside dans son élasticité. On peut y allouer un nombre virtuellement illimité de ressources, et ne payer au final que ce que nous avons utilisé.
+
+Il est ainsi possible de diminuer les coûts de fonctionnement d'un service grâce à deux facteurs :
+
+ * Pour des ressources ponctuelles nous ne payons que les heures consommées, plus besoin de louer des machines dédiées au mois,
+ * À cela s'ajoute le fait que de base les tarifs appliqués par Amazon ne sont pas très élevés (un grand nombre de clients leur permet de faire du chiffre sur la masse), avec en plus la possibilité de les diminuer plus en utilisant quelques astuces.
+
+Mais l'élasticité c'est également et surtout la promesse de toujours avoir à portée toutes les ressources nécessaire au fonctionnement et à l'évolution des services qui y sont hébergés.
+
+##Faiblesses
+
+La solution du cloud bien que très attrayante, présente toutefois quelques faiblesses, toutes basées sur un tronc commun : le cloud est hébergé, maintenu et vendu par une entreprise tierce.
+
+Aussi pouvons-nous noter les faiblesses suivantes :
+
+ * En utilisant AWS nous devenons dépendants des tarifs pratiqués par Amazon,
+ * Nous sommes également dépendants d'Amazon concernant les services que nous hébergeons chez eux, en termes de disponibilité,
+
+##Opportunités
+
+L'élasticité du cloud est pour nous l'opportunité de grandir sereinement :
+
+ * La garantie de toujours avoir les ressources nécessaires peut nous permettre, si nous arrivons à l'exploiter, de réaliser des études pour nos clients toujours plus complètes, toujours plus rapidement, et à moindre côut,
+ * La possibilité de réduire nos coûts de fonctionnement de base est l'opportunité d'améliorer nos services en proposant de nouvelles fonctionnalités à nos clients jusque là trop coûteuses en ressources pour être mis en place.
+
+##Menaces
+
+L'utilisation du cloud n'est cependant pas sans risques. En effet en y hébergeant une partie de nos services nous devenons dépendants d'Amazon.
+
+Aussi en cas d'interruption de service nous risquons d'être incapables de fournir notre propre service. Il faut cependant noter que tout hébergeur est soumis à ce risque, et que donc nous ne pouvons nous en affranchir.
+
+Un autre risque est de voir Amazon stopper son cloud, ou pire faire faillite. 
+Dans ce cas il nous faudrait changer de prestataire, et migrer tous nos services. 
+Si cela est en pratique faisable ce sera en revanche une migration longue à mettre en place, avec donc pour risque d'avoir une interruption de service. 
+Heureusement ce risque reste très faible, étant donné la taille du cloud d'Amazon, et le poid financier de l'entreprise.
+
+Enfin un dernier risque est de voir les tarifs pratiqués par Amazon augmenter : si cela devait arriver il nous faudrait certainement comme dans le cas précédent envisager une migration vers un autre cloud.
+Ce risque reste cependant très faible si ce n'est nul si l'on étudie l'évolution des tarifs pratiqués ces dernière années. //TODO courbe des prix
