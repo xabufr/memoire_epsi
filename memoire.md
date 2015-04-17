@@ -102,7 +102,7 @@ Ces data-centers sont mis à disposition seuls ou en groupes sous le nom de rég
 
 À titre d'information, voici la liste des régions mis à disposition lors de la rédaction de ce document :
 
-|Code           | Name                     |
+|Code           | Nom                      |
 |--------------:|--------------------------|
 |ap-northeast-1 | Asia Pacific (Tokyo)     |
 |ap-southeast-1 | Asia Pacific (Singapore) |
@@ -265,7 +265,7 @@ Ces choix doivent être fait avec soin car ils seront déterminants dans la réu
 
 Si on reprend ce qui motive la migration on note au moins deux choix techniques à faire:
  * Une technologie de répartition de tâches sur un ensemble de machines dans un but de parallélisation,
- * Un système de base de données orientée recherche capable de s'adapter à un environnement Cloud pour en tirer profit (scalabilité horizontale)
+ * Un système de base de données orientée recherche capable de s'adapter à un environnement Cloud pour en tirer profit (scalabilité horizontale), qui facilite l'ajout de nouvelles données aux structures existantes.
 
 ## La maquette pour la collecte des données
 
@@ -287,8 +287,6 @@ Cette approche encourage l'instanciation des ressources en fonction du nombre d'
  * Sinon on en créé un dimentionné pour l'étude en question,
  * Lorsqu'il est inactif, un cluster de calcul est détruit.
 
-
-
 Storm est lui un framework orienté «streaming», dans le sens où il n'y a pas de notion de lots de données à traiter.
 Cette technologie est particulièrement adaptée aux traitements en temps réel, comme par exemple le traitement de fichier de log.
 En effet il faut voir le cluster comme un mangeur de données capable de les traiter au fur et à mesure de leur arrivée.
@@ -303,3 +301,27 @@ Après avoir rapidement étudié ces différents Frameworks, j'ai décider d'uti
  * De plus dans le cadre d'un projet de recherche pour KeepAlert j'ai déjà été amené à manipuler cette technologie, que je connaissait donc déjà assez bien pour savoir qu'elle répondait à nos besoins,
  * Amazon proposant un service de configuration automatique des instance EC2 pour Hadoop, il n'est pas nécessaire d'y consacrer du temps et de l'énergie et de le recréer nous-même.
    Nous pouvons créer, redimenssionner, ajouter des tâches à nos cluster via de simples appels à l'API d'AWS.
+
+Je reviendrais plus tard sur la maquette elle même dans une partie consacée à la migration.
+
+## Le cas de la base de données
+
+Les deux conditions auxquelles la base doit se plier oriente d'office le choix de la base vers un système NoSQL :
+
+ * Les bases SQL classiques ne proposent pas de système de répartition comme on peut en trouver dans le monde NoSQL (notamment pour garantir les principes A.C.I.D.\footnote{TODO}, qui ne nous intéressent pas pour ces données)
+ * Elles ne sont pas non plus adaptées aux recherches «full text» avancées comme peuvent l'être les moteurs de recherche basés sur Apache Lucene,
+   un célèbre Framework de recherche de document (notamment sur la personnalisation de la façon d'analyser le texte),
+ * Certaines bases NoSQL n'ayant pas besoin de structure pour stocker des données, nous pourions ajouter facilement de nouveau champs aux entrées de nos études
+
+Il existe différents types de bases NoSQL, on peut citer les bases orientées documents, orientées colonnes, orientées graphe, clé/valeur, etc.
+
+La nature des données à stocker, à savoir des entrées volumineuses (jusqu'à plusieurs centaines de kibio-octets) liées entre elles par un identifiant d'étude, 
+et le fait qu'il doit être possible d'y effectuer des recherches «full text» élimine d'office une partie des bases exitantes. Aussi une base orientée documents semble indiquée.
+
+Parmis les bases orientées documents on peut citer :
+
+ * MongoDB,
+ * CouchDB,
+ * Solr,
+ * Elasticsearch
+//TODO expliquer pk es
