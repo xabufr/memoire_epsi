@@ -12,6 +12,7 @@ Idée de plan :
     * A plus long terme
  * Présentation du Cloud d'Amazon
  * S.W.O.T.
+ * Techniques à mettre en place (maquette)
  * Estimation des coûts – Coûts possibles chez les concurrents (OVH, Google, Azure) – Étude du marché
  * Procédure générale de migration
  * Un nouveau système de base de données – Elasticsearch
@@ -23,7 +24,7 @@ Idée de plan :
  * Force / faiblesse par rapport aux attentes
  * Bilan
 
-#Présentation du produit existant
+# Présentation du produit existant
 Keepalert est une plate-forme de surveillance de marques sur internet décomposée en 4 modules indépendants proposant différents types de protection :
 Le module noms de domaine protège les marques des sites de cyber-squatting et de contrefaçon. Ce module collecte diverses données, dont:
 
@@ -40,7 +41,7 @@ Le module noms de domaine protège les marques des sites de cyber-squatting et d
  
 Afin de collecter toutes ces données l'architecture suivante a été imaginée : TODO
 
-#Motivations
+# Motivations
 Cette architecture imaginée il y a de cela plus de 7 ans, bien que fonctionnelle, montre ses limites :
 
  * En termes de capacité de traitement, certaines études ne sont pas livrées dans des délais raisonnables, la file de traitement des serveurs de production étant constamment pleine,
@@ -87,12 +88,12 @@ Il nous faut donc tendre vers une architecture favorisant la scalabilité horizo
 Une autre particularité à relever est la ponctualité des études : il est inutile d'avoir une dizaine de machines allumées, elles ne sont utiles que lorsqu'il faut récolter des données. 
 Il serait donc judicieux de trouver un fournisseur louant des machines à la demande, au moins pour cette partie de la plate-forme.
 
-#Présentation du Cloud d'Amazon
+# Présentation du Cloud d'Amazon
 Amazon met à disposition de nombreux services basés sur son Cloud : Amazon Web Service (AWS).
 
 Parmi ces services on peut noter Elastic Cloud Compute, Simple Storage Service (S3) et Elastic MapReduce.
 
-##Généralités
+## Généralités
 Le Cloud d'Amazon étant de base mondial pour des raisons internes à Amazon (la vente de biens dans tout le globe), il est réparti sur plusieurs data-centers eux mêmes répartis sur tous les continents.
 
 Ainsi lorsque l'on désire en utiliser les services, la première étape est de choisir dans quel centre il faut allouer les ressources. Cette étape est obligatoire pour la quasi totalité des services, à quelques exceptions près.
@@ -123,7 +124,7 @@ Le choix de la région utilisée est important pour plusieurs raisons :
  * La distance physique entre la région choisie et les principaux consommateurs des ressources allouées peut changer l'expérience utilisateur (lien des qualité réseau, temps de latence, etc.).
  * La plupart des services nécessitent le choix d'une région ou d'une zone de disponibilité.
 
-##Amazon Elastic Cloud Compute
+## Amazon Elastic Cloud Compute
 Ce service (abrégé EC2) permet de louer à l'heure des machines virtuelles aux configurations diverses, réparties en plusieurs catégories différenciées par les ratio mémoire/cpu/stockage proposés.
 
 Chaque type d'instance est nommé d'après le schéma suivant (Type)(Génération).(Taille).
@@ -161,7 +162,7 @@ Ces tarifs dépendent généralement eux aussi de la région choisie.
 Par exemple, en Irelande le rapatriement de données depuis Internet coûte $0,01 par Go. Pour plus de détails il est possible de consulter la grille tarifaire sur <https://aws.amazon.com/fr/ec2/pricing/>.
 //TODO → Parler AMI ? EBS ? Instance-store ? HVM/PV ?
 
-##Amazon Simple Storage Service
+## Amazon Simple Storage Service
 Abrégé S3, le service de stockage d'Amazon permet de sauvegarder durablement dans son cloud des données arbitraires à prix réduit, et avec une durabilité de l'ordre de 99,999999999 % et une disponibilité de 99,99 % sur un an.
 
 Les données sont stockées dans une région, et dupliquées dans plusieurs data-center (de façon à pouvoir supporter la perte de deux centres de données).
@@ -187,7 +188,7 @@ En plus du stockage sont facturés les requêtes d'insertion de données, de lis
 
 Pour plus de détails sur les tarifs en vigueur consultez la grille tarifaire sur <https://aws.amazon.com/fr/s3/pricing/>. 
 
-##Amazon Elastic MapReduce
+## Amazon Elastic MapReduce
 Ce service s'appuie sur EC2 pour lancer et configurer des instances avec Hadoop, un Framework\footnote{TODO} de calcul distribué très connu basé sur MapReduce. 
 
 Il permet de faire abstraction de la configuration des machines virtuelles et de Hadoop : il suffit de spécifier le nombre de machines à utiliser et les tâches à accomplir, le service s'occupe du reste.
@@ -209,11 +210,11 @@ Il est possible de redimenssionner le cluster en cours de route:
 Le tarif appliqué à ce service correspond au tarif des ressources sous-jacentes utilisée (les machines EC2), plus une taxe dépendant du type de machine.
 Pour plus d'informations vous pouvez consulter la grille tarifaire sur <http://aws.amazon.com/fr/elasticmapreduce/pricing/>
 
-#SWOT - Forces - Faiblesse - Opportunités - Menaces
+# SWOT - Forces - Faiblesse - Opportunités - Menaces
 
 Le fait de migrer une partie de notre infrastructure vers le cloud d'Amazon va induire de nouveaux points forts, de nouveaux points faibles, et donc créer des opportunités et menaces.
 
-##Forces
+## Forces
 
 Toute la puissance du cloud réside dans son élasticité. On peut y allouer un nombre virtuellement illimité de ressources, et ne payer au final que ce que nous avons utilisé.
 
@@ -224,7 +225,7 @@ Il est ainsi possible de diminuer les coûts de fonctionnement d'un service grâ
 
 Mais l'élasticité c'est également et surtout la promesse de toujours avoir à portée toutes les ressources nécessaire au fonctionnement et à l'évolution des services qui y sont hébergés.
 
-##Faiblesses
+## Faiblesses
 
 La solution du cloud bien que très attrayante, présente toutefois quelques faiblesses, toutes basées sur un tronc commun : le cloud est hébergé, maintenu et vendu par une entreprise tierce.
 
@@ -233,14 +234,14 @@ Aussi pouvons-nous noter les faiblesses suivantes :
  * En utilisant AWS nous devenons dépendants des tarifs pratiqués par Amazon,
  * Nous sommes également dépendants d'Amazon concernant les services que nous hébergeons chez eux, en termes de disponibilité,
 
-##Opportunités
+## Opportunités
 
 L'élasticité du cloud est pour nous l'opportunité de grandir sereinement :
 
  * La garantie de toujours avoir les ressources nécessaires peut nous permettre, si nous arrivons à l'exploiter, de réaliser des études pour nos clients toujours plus complètes, toujours plus rapidement, et à moindre côut,
  * La possibilité de réduire nos coûts de fonctionnement de base est l'opportunité d'améliorer nos services en proposant de nouvelles fonctionnalités à nos clients jusque là trop coûteuses en ressources pour être mis en place.
 
-##Menaces
+## Menaces
 
 L'utilisation du cloud n'est cependant pas sans risques. En effet en y hébergeant une partie de nos services nous devenons dépendants d'Amazon.
 
@@ -253,3 +254,52 @@ Heureusement ce risque reste très faible, étant donné la taille du cloud d'Am
 
 Enfin un dernier risque est de voir les tarifs pratiqués par Amazon augmenter : si cela devait arriver il nous faudrait certainement comme dans le cas précédent envisager une migration vers un autre cloud.
 Ce risque reste cependant très faible si ce n'est nul si l'on étudie l'évolution des tarifs pratiqués ces dernière années. //TODO courbe des prix
+
+# Techniques mises en place pour la maquette
+
+Pour pouvoir estimer au mieux les côuts engendrés par la migration il est nécessaire de réaliser une maquette minimaliste du résultat final attendu, et d'en tirer des mesures.
+Mais avant même la réalisation de cette maquette vient le choix des technologies à utiliser.
+
+C'est en effet de ces technologies que dépandront les services à utiliser, les temps de traitement, de l'architecture à mettre en œuvre et donc des coûts.
+Ces choix doivent être fait avec soin car ils seront déterminants dans la réussite de cette migration.
+
+Si on reprend ce qui motive la migration on note au moins deux choix techniques à faire:
+ * Une technologie de répartition de tâches sur un ensemble de machines dans un but de parallélisation,
+ * Un système de base de données orientée recherche capable de s'adapter à un environnement Cloud pour en tirer profit (scalabilité horizontale)
+
+## La maquette pour la collecte des données
+
+La totalité du code existant assurant actuellement cette tâche étant du Java, utiliser une technologie compatible est un pré-requis.
+
+Il existe quelques technologies capables d'assurer cette tâche:
+
+ * Apache Hadoop,
+ * Apache Storm,
+ * Apache Spark
+
+La principale différence entres ces technologies est la façon dont les données sont traitées. 
+
+Ainsi pour Hadoop et Spark, une tâche correspond à des données à traiter en lots indivisibles.
+Cela signifie dans notre cas que chaque étude serait une tâche traitée de manière non interruptible, atomique : soit tous les éléments sont traités sans erreur, soit la tâche échoue.
+Cette approche encourage l'instanciation des ressources en fonction du nombre d'études à réaliser et de leur complexité :
+
+ * Si un cluster de calcul existe déjà et est capable de réaliser l'étude dans un temps raisonnable, alors on l'ajoute à sa file de traitements,
+ * Sinon on en créé un dimentionné pour l'étude en question,
+ * Lorsqu'il est inactif, un cluster de calcul est détruit.
+
+
+
+Storm est lui un framework orienté «streaming», dans le sens où il n'y a pas de notion de lots de données à traiter.
+Cette technologie est particulièrement adaptée aux traitements en temps réel, comme par exemple le traitement de fichier de log.
+En effet il faut voir le cluster comme un mangeur de données capable de les traiter au fur et à mesure de leur arrivée.
+Avec un tel fonctionnement, et dans notre cas, on pourrait imaginer le scénario suivant pour la réalisation de nos études :
+
+ * On créé un cluster de calcul auto-redimmensionnable en fonction du nombre d'éléments à traiter en file,
+ * A chaque nouvelle étude on envoie les éléments à traiter à ce même cluster.
+
+Après avoir rapidement étudié ces différents Frameworks, j'ai décider d'utiliser Hadoop pour ces raisons :
+
+ * L'atomicité des tâches facilite la cohérence des données en sortie (là où anciennement il pouvait par exemple manquer des captures d'écran sur certaines entrées),
+ * De plus dans le cadre d'un projet de recherche pour KeepAlert j'ai déjà été amené à manipuler cette technologie, que je connaissait donc déjà assez bien pour savoir qu'elle répondait à nos besoins,
+ * Amazon proposant un service de configuration automatique des instance EC2 pour Hadoop, il n'est pas nécessaire d'y consacrer du temps et de l'énergie et de le recréer nous-même.
+   Nous pouvons créer, redimenssionner, ajouter des tâches à nos cluster via de simples appels à l'API d'AWS.
