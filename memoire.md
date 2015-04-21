@@ -38,22 +38,22 @@ Le module noms de domaine protège les marques des sites de cyber-squatting et d
  * Le module Web 2 surveille les réseaux sociaux (Facebook, Youtube, Référencement de sites dans les moteurs de recherche, …), qui reprend la plupart des données collectées dans le module Noms de domaine,
  * Le module de marquage de page, qui collecte et analyse la provenance des visiteurs sur les sites officiel de nos clients,
  * Le module de détection de contenu similaire
- 
+
 Afin de collecter toutes ces données l'architecture suivante a été imaginée : TODO
 
 # Motivations
 Cette architecture imaginée il y a de cela plus de 7 ans, bien que fonctionnelle, montre ses limites :
 
  * En termes de capacité de traitement, certaines études ne sont pas livrées dans des délais raisonnables, la file de traitement des serveurs de production étant constamment pleine,
- * En termes de stockage des données, la taille de la base contenant les données récoltées est trop importante pour en modifier la structure, 
+ * En termes de stockage des données, la taille de la base contenant les données récoltées est trop importante pour en modifier la structure,
    il nous est donc impossible de proposer de nouveaux indicateurs pour nous démarquer de la concurrence (stockage HTML, contenu textuel, identifiants Ad Sence),
  * La production d'études plus volumineuses nous est impossible dans des délais raisonnables, et bloque la production des autres études,
  * Le moteur de base de données utilisé ne propose pas par défaut de moteur de recherche satisfaisant, une solution annexe basée sur SOLR a due être mise en place (pour faire des recherches sur le HTML des pages récoltées),
  * Les différentes étapes de récoltes étant totalement séparées, il arrive qu'une étude reste incomplète en fin de traitement en raison de la complexité de l'architecture (notamment pour les captures d'écran).
 
-Notre objectif à court terme est de nous affranchir ces limites. 
+Notre objectif à court terme est de nous affranchir ces limites.
 
-Cette migration doit nous permettre de fournir des résultats rapides et complets pour n'importe quelle taille d'étude. 
+Cette migration doit nous permettre de fournir des résultats rapides et complets pour n'importe quelle taille d'étude.
 Nous devons également être en mesure d'exploiter cette masse de données, notamment par le biais de la recherche full-text\footnote{TODO}.
 
 Mais cette démarche est aussi motivée par un objectif de refonte sur le long terme :
@@ -64,28 +64,28 @@ Mais cette démarche est aussi motivée par un objectif de refonte sur le long t
 
 Afin d'atteindre ces objectifs, une refonte du cœur de la plate-forme est nécessaire :
 
- *   Pour réduire au maximum les temps de traitement nécessaires pour l'étude des noms de domaines, la scalabilité horizontale doit être exploitée. 
-     En effet si il est possible de paralléliser sur une même machine la collecte des données, celle-ci sera vite limitée en termes de mémoire, de CPU et de bande passante. 
+ *   Pour réduire au maximum les temps de traitement nécessaires pour l'étude des noms de domaines, la scalabilité horizontale doit être exploitée.
+     En effet si il est possible de paralléliser sur une même machine la collecte des données, celle-ci sera vite limitée en termes de mémoire, de CPU et de bande passante.
 
-     En revanche, en parallélisant ces traitements sur un cluster de calcul il est possible de s'affranchir des limites de mémoire, de CPU, et dans une moindre mesure de bande passante 
+     En revanche, en parallélisant ces traitements sur un cluster de calcul il est possible de s'affranchir des limites de mémoire, de CPU, et dans une moindre mesure de bande passante
      (en fonction de la répartition des machines dans le data-center).
 
- *   Pour permettre l'enrichissement des données un nouveau moteur de stockage doit être envisagé. 
+ *   Pour permettre l'enrichissement des données un nouveau moteur de stockage doit être envisagé.
 
      MySQL utilisé actuellement montre ses limites en termes de recherche, mais aussi de stockage : le modèle de donné étant figé il n'est pas facile à faire évoluer.
      En effet pour ajouter un champ dans une table MySQL doit dupliquer la table pour en migrer les données. Ainsi l'espace nécessaire pour ajouter un champ à une table de 100Go est de 200Go.
 
-     Pour de petites quantités de données cela ne pose aucun soucis. 
+     Pour de petites quantités de données cela ne pose aucun soucis.
 
-     Dans notre cas nous voulons stocker des données de plus en plus volumineuses, si bien qu'il nous sera très rapidement impossible de modifier la structure de nos données. 
-     Cette volumétrie pouvant très rapidement exploser, une base de données permettant de répartir les entrées dans un cluster pourrait nous éviter des problèmes de performances et de capacité de stockage. 
+     Dans notre cas nous voulons stocker des données de plus en plus volumineuses, si bien qu'il nous sera très rapidement impossible de modifier la structure de nos données.
+     Cette volumétrie pouvant très rapidement exploser, une base de données permettant de répartir les entrées dans un cluster pourrait nous éviter des problèmes de performances et de capacité de stockage.
 
      Il nous faut donc un système de base de données s'affranchissant en partie du schémas, disposant de mécanismes de recherche avancés et dans l'idéal proposant une architecture en cluster.
 
-On dégage ainsi deux axes de travail (qui sont la récolte de données et le stockage de celles-ci) ayant un point commun : la répartition de la charge sur un cluster. 
+On dégage ainsi deux axes de travail (qui sont la récolte de données et le stockage de celles-ci) ayant un point commun : la répartition de la charge sur un cluster.
 Il nous faut donc tendre vers une architecture favorisant la scalabilité horizontale.
 
-Une autre particularité à relever est la ponctualité des études : il est inutile d'avoir une dizaine de machines allumées, elles ne sont utiles que lorsqu'il faut récolter des données. 
+Une autre particularité à relever est la ponctualité des études : il est inutile d'avoir une dizaine de machines allumées, elles ne sont utiles que lorsqu'il faut récolter des données.
 Il serait donc judicieux de trouver un fournisseur louant des machines à la demande, au moins pour cette partie de la plate-forme.
 
 # Présentation du Cloud d'Amazon
@@ -98,7 +98,7 @@ Le Cloud d'Amazon étant de base mondial pour des raisons internes à Amazon (la
 
 Ainsi lorsque l'on désire en utiliser les services, la première étape est de choisir dans quel centre il faut allouer les ressources. Cette étape est obligatoire pour la quasi totalité des services, à quelques exceptions près.
 
-Ces data-centers sont mis à disposition seuls ou en groupes sous le nom de région, de sorte que chaque région soit totalement indépendante. 
+Ces data-centers sont mis à disposition seuls ou en groupes sous le nom de région, de sorte que chaque région soit totalement indépendante.
 
 À titre d'information, voici la liste des régions mis à disposition lors de la rédaction de ce document :
 
@@ -114,7 +114,7 @@ Ces data-centers sont mis à disposition seuls ou en groupes sous le nom de rég
 |us-west-1      | US West (N. California)  |
 |us-west-2      | US West (Oregon)         |
 
-Les régions sont elle-même découpées en zone de disponibilité (Availability Zone). Ces zones sont reliées au sein d'une même région via des liens réseau à faible latence. 
+Les régions sont elle-même découpées en zone de disponibilité (Availability Zone). Ces zones sont reliées au sein d'une même région via des liens réseau à faible latence.
 En revanche la communication inter-région nécessite une communication via Internet.
 
 Le choix de la région utilisée est important pour plusieurs raisons :
@@ -129,18 +129,18 @@ Ce service (abrégé EC2) permet de louer à l'heure des machines virtuelles aux
 
 Chaque type d'instance est nommé d'après le schéma suivant (Type)(Génération).(Taille).
 Par exemple, il existe des instances d'usage général (M), optimisées calcul (C), ou encore optimisées pour la mémoire (R).
-Ainsi une instance d'usage général, de 3ème génération (la génération actuelle) de taille large sera nommée `m3.medium`. 
+Ainsi une instance d'usage général, de 3ème génération (la génération actuelle) de taille large sera nommée `m3.medium`.
 
 Le tableau listant toutes les instances existantes est disponible sur <https://aws.amazon.com/fr/ec2/instance-types/>.
 
-Les instances EC2 doivent être lancées dans une zone de disponibilité, ou à défaut dans une région (la zone est alors choisie au hasard). 
+Les instances EC2 doivent être lancées dans une zone de disponibilité, ou à défaut dans une région (la zone est alors choisie au hasard).
 
 Leur coût horaire dépend non seulement de la région, mais aussi du mode d'allocation choisi :
 
  *   Les instances à la demande proposent un coût horaire fixe,
- *   Les instances « SPOT » proposent un coût horaire variable mais généralement très inférieur aux instances à la demande (on peut trouver des prix jusqu'à 8 fois inférieurs). 
- 
-     Le prix des instances est basé sur la loi de l'offre (la quantité de machines non utilisées) et de la demande. 
+ *   Les instances « SPOT » proposent un coût horaire variable mais généralement très inférieur aux instances à la demande (on peut trouver des prix jusqu'à 8 fois inférieurs).
+
+     Le prix des instances est basé sur la loi de l'offre (la quantité de machines non utilisées) et de la demande.
      Il est possible de spécifier un prix horaire maximum afin d'éviter de devoir débourser de grosses sommes en cas de pic d'utilisation. La machine allouée sera alors éteinte.
 
  *   Les instances réservées d'utilisation légère, moyenne ou intensives, qui permettent une réduction du prix des instances à la demande de l'ordre de 30 % à 60 % pour les instances de plus grande taille.
@@ -167,11 +167,11 @@ Abrégé S3, le service de stockage d'Amazon permet de sauvegarder durablement d
 
 Les données sont stockées dans une région, et dupliquées dans plusieurs data-center (de façon à pouvoir supporter la perte de deux centres de données).
 
-Ce service est en réalité propulsé par un moteur de base de données de type clé/valeur.  
+Ce service est en réalité propulsé par un moteur de base de données de type clé/valeur.
 Il est donc possible de nommer ses données de manière hiérarchisée, comme sur un système de fichier classique (par exemple : `dossier/autre_dossier/mon_fichier`).
 
-Afin d'utiliser ce service, il est nécessaire de créer un dépôt de données (bucket dans la terminologie  AWS). 
-L'espace disponible dans un bucket est virtuellement illimité (on estime à 2 000 000 000 000 – deux billions le nombre d'objets stocké en Mars 2013… il y a 2 ans !), 
+Afin d'utiliser ce service, il est nécessaire de créer un dépôt de données (bucket dans la terminologie  AWS).
+L'espace disponible dans un bucket est virtuellement illimité (on estime à 2 000 000 000 000 – deux billions le nombre d'objets stocké en Mars 2013… il y a 2 ans !),
 les données sont stockées dans la région spécifiée lors de la création de celui-ci.
 
 De plus, à chaque bucket peut être attaché de nombreuses options permettant de :
@@ -183,13 +183,13 @@ De plus, à chaque bucket peut être attaché de nombreuses options permettant d
  *  Activer un cryptage AES des données,
  *  Et quelques autres options non listées ici.
 
-Le coût de ce service est très faible, par exemple en Irelande le prix par Go par mois est de $0,03. 
+Le coût de ce service est très faible, par exemple en Irelande le prix par Go par mois est de $0,03.
 En plus du stockage sont facturés les requêtes d'insertion de données, de listage, de récupération et la bande passante utilisée.
 
-Pour plus de détails sur les tarifs en vigueur consultez la grille tarifaire sur <https://aws.amazon.com/fr/s3/pricing/>. 
+Pour plus de détails sur les tarifs en vigueur consultez la grille tarifaire sur <https://aws.amazon.com/fr/s3/pricing/>.
 
 ## Amazon Elastic MapReduce
-Ce service s'appuie sur EC2 pour lancer et configurer des instances avec Hadoop, un Framework\footnote{TODO} de calcul distribué très connu basé sur MapReduce. 
+Ce service s'appuie sur EC2 pour lancer et configurer des instances avec Hadoop, un Framework\footnote{TODO} de calcul distribué très connu basé sur MapReduce.
 
 Il permet de faire abstraction de la configuration des machines virtuelles et de Hadoop : il suffit de spécifier le nombre de machines à utiliser et les tâches à accomplir, le service s'occupe du reste.
 
@@ -247,9 +247,9 @@ L'utilisation du cloud n'est cependant pas sans risques. En effet en y hébergea
 
 Aussi en cas d'interruption de service nous risquons d'être incapables de fournir notre propre service. Il faut cependant noter que tout hébergeur est soumis à ce risque, et que donc nous ne pouvons nous en affranchir.
 
-Un autre risque est de voir Amazon stopper son cloud, ou pire faire faillite. 
-Dans ce cas il nous faudrait changer de prestataire, et migrer tous nos services. 
-Si cela est en pratique faisable ce sera en revanche une migration longue à mettre en place, avec donc pour risque d'avoir une interruption de service. 
+Un autre risque est de voir Amazon stopper son cloud, ou pire faire faillite.
+Dans ce cas il nous faudrait changer de prestataire, et migrer tous nos services.
+Si cela est en pratique faisable ce sera en revanche une migration longue à mettre en place, avec donc pour risque d'avoir une interruption de service.
 Heureusement ce risque reste très faible, étant donné la taille du cloud d'Amazon, et le poid financier de l'entreprise.
 
 Enfin un dernier risque est de voir les tarifs pratiqués par Amazon augmenter : si cela devait arriver il nous faudrait certainement comme dans le cas précédent envisager une migration vers un autre cloud.
@@ -277,7 +277,7 @@ Il existe quelques technologies capables d'assurer cette tâche:
  * Apache Storm,
  * Apache Spark
 
-La principale différence entres ces technologies est la façon dont les données sont traitées. 
+La principale différence entres ces technologies est la façon dont les données sont traitées.
 
 Ainsi pour Hadoop et Spark, une tâche correspond à des données à traiter en lots indivisibles.
 Cela signifie dans notre cas que chaque étude serait une tâche traitée de manière non interruptible, atomique : soit tous les éléments sont traités sans erreur, soit la tâche échoue.
@@ -310,18 +310,33 @@ Les deux conditions auxquelles la base doit se plier oriente d'office le choix d
 
  * Les bases SQL classiques ne proposent pas de système de répartition comme on peut en trouver dans le monde NoSQL (notamment pour garantir les principes A.C.I.D.\footnote{TODO}, qui ne nous intéressent pas pour ces données)
  * Elles ne sont pas non plus adaptées aux recherches «full text» avancées comme peuvent l'être les moteurs de recherche basés sur Apache Lucene,
-   un célèbre Framework de recherche de document (notamment sur la personnalisation de la façon d'analyser le texte),
- * Certaines bases NoSQL n'ayant pas besoin de structure pour stocker des données, nous pourions ajouter facilement de nouveau champs aux entrées de nos études
+   un célèbre Framework de recherche de documents (notamment sur la personnalisation de la façon d'analyser le texte),
+ * Certaines bases NoSQL n'ayant pas besoin de structure pour stocker des données, nous pourrions ajouter facilement de nouveau champs aux entrées de nos études
 
 Il existe différents types de bases NoSQL, on peut citer les bases orientées documents, orientées colonnes, orientées graphe, clé/valeur, etc.
 
-La nature des données à stocker, à savoir des entrées volumineuses (jusqu'à plusieurs centaines de kibio-octets) liées entre elles par un identifiant d'étude, 
+La nature des données à stocker, à savoir des entrées volumineuses (jusqu'à plusieurs centaines de kibio-octets) liées entre elles par un identifiant d'étude,
 et le fait qu'il doit être possible d'y effectuer des recherches «full text» élimine d'office une partie des bases exitantes. Aussi une base orientée documents semble indiquée.
 
-Parmis les bases orientées documents on peut citer :
+Parmi les bases orientées documents on peut citer :
 
  * MongoDB,
  * CouchDB,
  * Solr,
  * Elasticsearch
-//TODO expliquer pk es
+
+Étant donné nos besoins en termes de recherche nous avons choisis d'utiliser Elasticsearch non seulement pour la recherche de documents (son utilisation habituelle), mais aussi pour le stockage des données.
+
+Contrairement aux moteurs totalement orientés documents, Elasticsearch est avant tout orienté recherche, ce qui signifie entre autres que le stockage des documents n'est pas la priorité de cette base.
+Il n'est par exemple pas possible de réaliser des requêtes de type ``UPDATE WHERE`` en équivalent SQL.
+
+Le principal avantage d'Elasticsearch par rapport aux autres systèmes est sa capacité d'indexation des donné, qui était expérimental et instable au moment du choix pour les bases MongoDB et CouchDB.
+Solr, le principal concurrent d'Elasticsearch n'a pas été retenu, bien qu'il propose des fonctionnalités similaires en termes de recherche.
+En effet quand nous avons du faire un choix un cluster Elasticsearch était beaucoup plus simple à gérer qu'un cluster Slor, en étant tout aussi complet.
+
+De plus la situation quand à la garantie de l'intégrité des données s'améliore de version en version, si bien qu'il n'est dans notre cas pas risqué de l'utiliser comme moteur de stockage :
+
+ * L'introduction de la fonctionnalité de snapshot\footnote{TODO} incrémental nous permet de sauvegarder l'intégralité de notre base plusieurs fois par jours à faible coût,
+ * Les mécanismes internes de la base sont améliorés de version en version (par exemple avec l'introduction de sommes de contrôl),
+ * La réplication des donnés sur plusieurs machines rend robuste la base à la perte d'un ou plusieurs nœuds en fonction de la configuration
+
