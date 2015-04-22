@@ -26,10 +26,10 @@ Idée de plan :
 
 # Présentation du produit existant
 Keepalert est une plate-forme de surveillance de marques sur internet décomposée en 4 modules indépendants proposant différents types de protection :
-Le module noms de domaine protège les marques des sites de cyber-squatting et de contrefaçon. Ce module collecte diverses données, dont:
+Le module noms de domaine protège les marques des sites de cyber-squatting et de contrefaçon. Ce module collecte diverses données, dont :
 
- * Les données Whois,\footnote{
- Contraction de l'Anglais Who Is.
+ * Les données Whois,
+ \footnote { Contraction de l'Anglais Who Is.
  Ces données sont fournies par les registres de noms de domaine, et permettent d'en récupérer les données légales et techniques comme la date du dépôt, à qui appartient le domaine, les coordonnées des entités le gérant, etc.
  }
  * Des captures d'écran des sites,
@@ -82,10 +82,10 @@ Afin d'atteindre ces objectifs, une refonte du cœur de la plate-forme est néce
 
      Il nous faut donc un système de base de données s'affranchissant en partie du schémas, disposant de mécanismes de recherche avancés et dans l'idéal proposant une architecture en cluster.
 
-On dégage ainsi deux axes de travail (qui sont la récolte de données et le stockage de celles-ci) ayant un point commun : la répartition de la charge sur un cluster.
+On dégage ainsi deux axes de travail (qui sont la récolte de données et le stockage de celles-ci) ayant un point commun : la répartition de la charge sur un cluster.
 Il nous faut donc tendre vers une architecture favorisant la scalabilité horizontale.
 
-Une autre particularité à relever est la ponctualité des études : il est inutile d'avoir une dizaine de machines allumées, elles ne sont utiles que lorsqu'il faut récolter des données.
+Une autre particularité à relever est la ponctualité des études : il est inutile d'avoir une dizaine de machines allumées, elles ne sont utiles que lorsqu'il faut récolter des données.
 Il serait donc judicieux de trouver un fournisseur louant des machines à la demande, au moins pour cette partie de la plate-forme.
 
 # Présentation du Cloud d'Amazon
@@ -159,7 +159,7 @@ Ces différents modes d'allocation permettent de couvrir la plupart des besoins�
 En plus du coût horaire de base lié à l'instance, on retrouve d'autres charges liées à l'utilisation d'autres ressources dans le Cloud, comme la bande passante, de l'espace disque supplémentaire ou encore les entrées/sorties disque.
 Ces tarifs dépendent généralement eux aussi de la région choisie.
 
-Par exemple, en Irelande le rapatriement de données depuis Internet coûte $0,01 par Go. Pour plus de détails il est possible de consulter la grille tarifaire sur <https://aws.amazon.com/fr/ec2/pricing/>.
+Par exemple, en Irelande le rapatriement de données depuis Internet coûte \$0,01 par Go. Pour plus de détails il est possible de consulter la grille tarifaire sur <https://aws.amazon.com/fr/ec2/pricing/>.
 //TODO → Parler AMI ? EBS ? Instance-store ? HVM/PV ?
 
 ## Amazon Simple Storage Service
@@ -183,7 +183,7 @@ De plus, à chaque bucket peut être attaché de nombreuses options permettant d
  *  Activer un cryptage AES des données,
  *  Et quelques autres options non listées ici.
 
-Le coût de ce service est très faible, par exemple en Irelande le prix par Go par mois est de $0,03.
+Le coût de ce service est très faible, par exemple en Irelande le prix par Go par mois est de \$0,03.
 En plus du stockage sont facturés les requêtes d'insertion de données, de listage, de récupération et la bande passante utilisée.
 
 Pour plus de détails sur les tarifs en vigueur consultez la grille tarifaire sur <https://aws.amazon.com/fr/s3/pricing/>.
@@ -196,13 +196,13 @@ Il permet de faire abstraction de la configuration des machines virtuelles et de
 Il permet également d'utiliser Amazon S3 comme espace de stockage pour les données des tâches à effectuer (aussi bien en entrée qu'en sortie) en lieu et place d'HDFS, le système de fichier d'Hadoop.
 
 Afin d'utiliser ce service, il est nécessaire de spécifier dans quelle région les instances EC2 doivent être lancées, ainsi que leur type et leur nombre.
-Les instances du cluster peuvent avoir 3 rôles différents:
+Les instances du cluster peuvent avoir 3 rôles différents :
 
  * La machine Master, chef d'orchestre du cluster,
  * Les machines Core, qui en plus des calculs à effectuer stockent une partie des données de la partition HDFS partagée,
  * Les machines Task qui ne font que des calculs.
 
-Il est possible de redimenssionner le cluster en cours de route:
+Il est possible de redimenssionner le cluster en cours de route :
 
  * En ajoutant des machines de type Core ou Task,
  * Les nœuds de type Master et Core ne peuvent être supprimés sans mettre en péril le cluster de calcul, contrairement aux nœuds de type Task.
@@ -263,7 +263,7 @@ Mais avant même la réalisation de cette maquette vient le choix des technologi
 C'est en effet de ces technologies que dépandront les services à utiliser, les temps de traitement, de l'architecture à mettre en œuvre et donc des coûts.
 Ces choix doivent être fait avec soin car ils seront déterminants dans la réussite de cette migration.
 
-Si on reprend ce qui motive la migration on note au moins deux choix techniques à faire:
+Si on reprend ce qui motive la migration on note au moins deux choix techniques à faire :
  * Une technologie de répartition de tâches sur un ensemble de machines dans un but de parallélisation,
  * Un système de base de données orientée recherche capable de s'adapter à un environnement Cloud pour en tirer profit (scalabilité horizontale), qui facilite l'ajout de nouvelles données aux structures existantes.
 
@@ -271,7 +271,7 @@ Si on reprend ce qui motive la migration on note au moins deux choix techniques 
 
 La totalité du code existant assurant actuellement cette tâche étant du Java, utiliser une technologie compatible est un pré-requis.
 
-Il existe quelques technologies capables d'assurer cette tâche:
+Il existe quelques technologies capables d'assurer cette tâche :
 
  * Apache Hadoop,
  * Apache Storm,
@@ -328,7 +328,7 @@ Parmi les bases orientées documents on peut citer :
 Étant donné nos besoins en termes de recherche nous avons choisis d'utiliser Elasticsearch non seulement pour la recherche de documents (son utilisation habituelle), mais aussi pour le stockage des données.
 
 Contrairement aux moteurs totalement orientés documents, Elasticsearch est avant tout orienté recherche, ce qui signifie entre autres que le stockage des documents n'est pas la priorité de cette base.
-Il n'est par exemple pas possible de réaliser des requêtes de type ``UPDATE WHERE`` en équivalent SQL.
+Il n'est par exemple pas possible de réaliser des requêtes de type `UPDATE WHERE` en équivalent SQL.
 
 Le principal avantage d'Elasticsearch par rapport aux autres systèmes est sa capacité d'indexation des donné, qui était expérimental et instable au moment du choix pour les bases MongoDB et CouchDB.
 Solr, le principal concurrent d'Elasticsearch n'a pas été retenu, bien qu'il propose des fonctionnalités similaires en termes de recherche.
