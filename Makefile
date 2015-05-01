@@ -7,4 +7,4 @@ view: memoire.pdf
 	xdg-open memoire.pdf
 
 clean: memoire.md
-	rm memoire.pdf
+	rm -f memoire.pdf
