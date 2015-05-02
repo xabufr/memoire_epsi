@@ -30,7 +30,12 @@ Keepalert est une plate-forme de surveillance de marques sur internet décompos�
 
 Seuls les deux premiers modules sont concernés par la migration couverte par ce mémoire.
 
-Afin de collecter toutes ces données l'architecture suivante a été mise en place : TODO
+Afin de collecter toutes ces données l'architecture suivante a été mise en place (\autoref{fig:ancienne_archi}) :
+\begin{figure}
+    \includestandalone[width=\textwidth]{schemas/ancien_schemas}
+    \caption{Ancienne architecture}
+    \label{fig:ancienne_archi}
+\end{figure}
 
 # Motivations
 Cette architecture imaginée il y a de cela plus de 7 ans, bien que fonctionnelle, montre ses limites :
