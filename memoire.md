@@ -1,19 +1,36 @@
+# Introduction
+
+TODO
+
+# Présentation de l'entreprise
+
+TODO
+
 # Présentation du produit existant
 Keepalert est une plate-forme de surveillance de marques sur internet décomposée en 4 modules indépendants proposant différents types de protection :
-Le module noms de domaine protège les marques des sites de cyber-squatting et de contrefaçon. Ce module collecte diverses données, dont :
 
- * Les données Whois,
- \footnote { Contraction de l'Anglais Who Is.
- Ces données sont fournies par les registres de noms de domaine, et permettent d'en récupérer les données légales et techniques comme la date du dépôt, à qui appartient le domaine, les coordonnées des entités le gérant, etc.
- }
- * Des captures d'écran des sites,
- * Des adresses I.P,
- * Le contenu HTML des pages,
- * Le module Web 2 surveille les réseaux sociaux (Facebook, Youtube, Référencement de sites dans les moteurs de recherche, …), qui reprend la plupart des données collectées dans le module Noms de domaine,
- * Le module de marquage de page, qui collecte et analyse la provenance des visiteurs sur les sites officiel de nos clients,
- * Le module de détection de contenu similaire
+  * Le module noms de domaine protège les marques des sites de cyber-squatting et de contrefaçon. Ce module collecte diverses données, dont :
+     * Les données Whois,
+     \footnote { Contraction de l'Anglais Who Is.
+     Ces données sont fournies par les registres de noms de domaine, et permettent d'en récupérer les données légales et techniques comme la date du dépôt, à qui appartient le domaine, les coordonnées des entités le gérant, etc.
+     }
+     * Des captures d'écran des sites,
+     * Des adresses I.P\footnote{TODO nécessite explication ?},
+     * Le contenu HTML\footnote{TODO} des pages,
+  * Le module réseaux sociaux, permettant la surveillance sociale des contenus.
 
-Afin de collecter toutes ces données l'architecture suivante a été imaginée : TODO
+    Les sites couverts par ce module, à titre d'exemple, peuvent être: Twitter, Facebook, Youtube, Vimeo, LinkedIn, etc.
+    Les données récoltées par ce module peuvent être:
+     * Le contenu textuel des pages
+     * Des captures d'écran
+     * Des méta données, c'est-à-dire par exemple le nombre de vues, le nombre de likes, la popularité, etc.
+
+  * Le module WebMarker, qui permet d'analyser la provenance des visiteurs sur un site officiel, et ainsi découvrir certains sites litigieux,
+  * Le module de détection de contenu similaire
+
+Seuls les deux premiers modules sont concernés par la migration couverte par ce mémoire.
+
+Afin de collecter toutes ces données l'architecture suivante a été mise en place : TODO
 
 # Motivations
 Cette architecture imaginée il y a de cela plus de 7 ans, bien que fonctionnelle, montre ses limites :
