@@ -1,29 +1,3 @@
-Mémoire I5
-=========
-
-Titre : Migration du système de collecte de données d'une plate-forme de surveillance de marque sur internet vers le Cloud d'Amazon
-
-Idée de plan :
-
- * Présentation de l'entreprise
- * Présentation du produit existant
- * Ce qui motive cette migration
-    * A court terme
-    * A plus long terme
- * Présentation du Cloud d'Amazon
- * S.W.O.T.
- * Techniques à mettre en place (maquette)
- * Estimation des coûts – Coûts possibles chez les concurrents (OVH, Google, Azure) – Étude du marché
- * Procédure générale de migration
- * Un nouveau système de base de données – Elasticsearch
- * Architecture globale mise en place
- * Écriture d'un scheduler – Chef d'orchestre d'Amazon
- * Écriture de la tâche hadoop
- * Migration du code existant
- * Coûts observés, comparaison aux estimations
- * Force / faiblesse par rapport aux attentes
- * Bilan
-
 # Présentation du produit existant
 Keepalert est une plate-forme de surveillance de marques sur internet décomposée en 4 modules indépendants proposant différents types de protection :
 Le module noms de domaine protège les marques des sites de cyber-squatting et de contrefaçon. Ce module collecte diverses données, dont :
@@ -306,7 +280,7 @@ Je reviendrais plus tard sur la maquette elle même dans une partie consacée à
 
 ## Le cas de la base de données
 
-Les deux conditions auxquelles la base doit se plier oriente d'office le choix de la base vers un système NoSQL :
+Les deux conditions auxquelles la base doit se plier oriente d'office le choix vers un système NoSQL :
 
  * Les bases SQL classiques ne proposent pas de système de répartition comme on peut en trouver dans le monde NoSQL (notamment pour garantir les principes A.C.I.D.\footnote{TODO}, qui ne nous intéressent pas pour ces données)
  * Elles ne sont pas non plus adaptées aux recherches «full text» avancées comme peuvent l'être les moteurs de recherche basés sur Apache Lucene,
@@ -316,7 +290,7 @@ Les deux conditions auxquelles la base doit se plier oriente d'office le choix d
 Il existe différents types de bases NoSQL, on peut citer les bases orientées documents, orientées colonnes, orientées graphe, clé/valeur, etc.
 
 La nature des données à stocker, à savoir des entrées volumineuses (jusqu'à plusieurs centaines de kibio-octets) liées entre elles par un identifiant d'étude,
-et le fait qu'il doit être possible d'y effectuer des recherches «full text» élimine d'office une partie des bases exitantes. Aussi une base orientée documents semble indiquée.
+et le fait qu'il doit être possible d'y effectuer des recherches «full text» élimine d'office une partie des bases existantes. Aussi une base orientée documents semble indiquée.
 
 Parmi les bases orientées documents on peut citer :
 
@@ -330,13 +304,32 @@ Parmi les bases orientées documents on peut citer :
 Contrairement aux moteurs totalement orientés documents, Elasticsearch est avant tout orienté recherche, ce qui signifie entre autres que le stockage des documents n'est pas la priorité de cette base.
 Il n'est par exemple pas possible de réaliser des requêtes de type `UPDATE WHERE` en équivalent SQL.
 
-Le principal avantage d'Elasticsearch par rapport aux autres systèmes est sa capacité d'indexation des donné, qui était expérimental et instable au moment du choix pour les bases MongoDB et CouchDB.
+Le principal avantage d'Elasticsearch par rapport aux autres systèmes est sa capacité d'indexation des données, qui était expérimental et instable au moment du choix pour les bases MongoDB et CouchDB.
 Solr, le principal concurrent d'Elasticsearch n'a pas été retenu, bien qu'il propose des fonctionnalités similaires en termes de recherche.
 En effet quand nous avons du faire un choix un cluster Elasticsearch était beaucoup plus simple à gérer qu'un cluster Slor, en étant tout aussi complet.
 
 De plus la situation quand à la garantie de l'intégrité des données s'améliore de version en version, si bien qu'il n'est dans notre cas pas risqué de l'utiliser comme moteur de stockage :
 
  * L'introduction de la fonctionnalité de snapshot\footnote{TODO} incrémental nous permet de sauvegarder l'intégralité de notre base plusieurs fois par jours à faible coût,
- * Les mécanismes internes de la base sont améliorés de version en version (par exemple avec l'introduction de sommes de contrôl),
+ * Les mécanismes internes de la base sont améliorés de version en version (par exemple avec l'introduction de sommes de contrôle),
  * La réplication des donnés sur plusieurs machines rend robuste la base à la perte d'un ou plusieurs nœuds en fonction de la configuration
 
+# Estimation des coûts
+
+# Procédure générale de migration
+
+# Elasticsearch
+
+# Architecture
+
+# Le Scheduler
+
+# La tâche Hadoop
+
+# Changements sur le code existant - Migration de la plateforme
+
+# Coûts observés, comparaison avec les estimations
+
+# Force / Faiblesses observées par rapport aux attentes
+
+# Bilan
