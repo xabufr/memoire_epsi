@@ -30,12 +30,26 @@ Keepalert est une plate-forme de surveillance de marques sur internet décompos�
 
 Seuls les deux premiers modules sont concernés par la migration couverte par ce mémoire.
 
-Afin de collecter toutes ces données l'architecture suivante a été mise en place (\autoref{fig:ancienne_archi}) :
-\begin{figure}
+Afin de collecter toutes données les données de ces deux modules l'architecture suivante a été mise en place (\autoref{fig:ancienne_archi}).
+
+\begin{figure}[!h]
     \includestandalone[width=\textwidth]{schemas/ancien_schemas}
     \caption{Ancienne architecture}
     \label{fig:ancienne_archi}
 \end{figure}
+\FloatBarrier
+
+Explications :
+
+ * L'utilisateur accède à la plateforme *via* le serveur *Front*,
+ * Le serveur *Scheduler* est chargé de lancer les études programmées d'en surveiller l'exécution. Il exécute le même code que le serveur *Front*, et permet donc d'effectuer des tests en interne avant passage en production client.
+ * Le serveur de base de données MySQL stocke toutes les données de la plateforme, et est utilisé par la plupart des autres serveurs,
+ * Les serveurs de type *Calcul* sont chargés de récolter les données relatives aux études, et sont pilotés par le *Scheduler*.
+   * Ils stockent les résultats directement en base,
+   * Une étude ne peut être produite que par un seul serveur (pas de répartition de charge),
+   * Ils récoltent toutes les données hors captures d'écran
+ * Les serveurs *Screengrab* prennent des captures de sites et les stockent sur un *NAS* partagé
+ * Un service secondaire *Front - Captures* sert les captures aux utilisateurs quand nécessaire
 
 # Motivations
 Cette architecture imaginée il y a de cela plus de 7 ans, bien que fonctionnelle, montre ses limites :
@@ -355,3 +369,4 @@ De plus la situation quand à la garantie de l'intégrité des données s'améli
 # Force / Faiblesses observées par rapport aux attentes
 
 # Bilan
+
