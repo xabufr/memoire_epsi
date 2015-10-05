@@ -10,8 +10,7 @@
     <meta name="author" content="Hakim El Hattab">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"
-    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
@@ -55,9 +54,48 @@
                 </section>
                 <section>
                     <h3>L'entreprise</h3>
+                    <p>
+                        <ul>
+                            <li>Systonic, SAS située à Pessac</li>
+                            <li>Dirigée par H. Berthou &amp; L.C Fabres</li>
+                            <li>Nombreuses activités</li>
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h3>Prodomaines</h3>
+                    <p>
+                        <ul>
+                            <!--TODO C.A. ?-->
+                            <li>Activité liées aux noms de domaines</li>
+                            <li>Registre agréé ICANN</li>
+                            <li>Surveillence de marques sur Internet via la plateforme KeepAlert</li>
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h3>Mon parcours</h3>
+                    <p>
+                        <ul>
+                            <li>Stage Juin 2013</li>
+                            <li>Alternance 2013 - 2015</li>
+                            <li>CDD 2015 - 2016</li>
+                        </ul>
+                    </p>
                 </section>
                 <section>
                     <h3>Mes missions</h3>
+                    <p>
+                        <ul>
+                            <li>R&amp;D pour KeepAlert</li>
+                            <ul>
+                                <li>Indexation d'images</li>
+                                <li>Utilisation du Cloud d'Amazon</li>
+                            </ul>
+                            <li>Mise en place d'outils d'aide au développement</li>
+                            <li>Correction de bugs</li>
+                        </ul>
+                    </p>
                 </section>
             </section>
             <!--6 minutes-->
@@ -116,8 +154,7 @@
     <script>
         // Full list of configuration options available at:
          // https://github.com/hakimel/reveal.js#configuration
-        Reveal.initialize(
-        {
+        Reveal.initialize({
             controls: true,
             progress: true,
             history: true,
@@ -126,48 +163,37 @@
             transition: 'slide', // none/fade/slide/convex/concave/zoom
 
             // Optional reveal.js plugins
-            dependencies: [
-            {
+            dependencies: [{
                 src: 'lib/js/classList.js',
-                condition: function()
-                {
+                condition: function() {
                     return !document.body.classList;
                 }
-            },
-            {
+            }, {
                 src: 'plugin/markdown/marked.js',
-                condition: function()
-                {
+                condition: function() {
                     return !!document.querySelector(
                         '[data-markdown]');
                 }
-            },
-            {
+            }, {
                 src: 'plugin/markdown/markdown.js',
-                condition: function()
-                {
+                condition: function() {
                     return !!document.querySelector(
                         '[data-markdown]');
                 }
-            },
-            {
+            }, {
                 src: 'plugin/highlight/highlight.js',
                 async: true,
-                condition: function()
-                {
+                condition: function() {
                     return !!document.querySelector(
                         'pre code');
                 },
-                callback: function()
-                {
+                callback: function() {
                     hljs.initHighlightingOnLoad();
                 }
-            },
-            {
+            }, {
                 src: 'plugin/zoom-js/zoom.js',
                 async: true
-            },
-            {
+            }, {
                 src: 'plugin/notes/notes.js',
                 async: true
             }]
