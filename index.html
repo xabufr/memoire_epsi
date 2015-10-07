@@ -29,6 +29,17 @@
             'css/print/pdf.css' : 'css/print/paper.css';
         document.getElementsByTagName('head')[0].appendChild(link);
     </script>
+    <style type="text/css">
+        figure {
+            max-height: 95%;
+            max-width: 95%;
+        }
+        figcaption {
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 10px 20px;
+        }
+    </style>
 
     <!--[if lt IE 9]>
         <script src="lib/js/html5shiv.js"></script>
@@ -42,9 +53,6 @@
             <section>
                 <h3>Migration du système de collecte de données d'une plateforme de surveillance de marques sur internet vers le Cloud d'Amazon</h3>
                 <small>Thomas LOUBIOU - 2015</small>
-            </section>
-            <section>
-                <h2>Sommaire</h2>
             </section>
             <!--3 minutes-->
             <section>
@@ -66,13 +74,17 @@
                     <h3>Prodomaines</h3>
                     <p>
                         <ul>
-                            <!--TODO C.A. ?-->
-                            <li>Activité liées aux noms de domaines</li>
+                            <li>Noms de domaines</li>
                             <li>Registre agréé ICANN</li>
-                            <li>Surveillence de marques sur Internet via la plateforme KeepAlert</li>
+                            <li>Surveillence de marques sur Internet - KeepAlert</li>
                             <li>Plus d'1M de C.A. en 2014</li>
                         </ul>
                     </p>
+                    <aside class="notes">
+                        <ul>
+                            <li>Expliquer ce qu'est un NDD</li>
+                        </ul>
+                    </aside>
                 </section>
                 <section>
                     <h3>Mon parcours</h3>
@@ -98,7 +110,6 @@
                             <ul>
                                 <li>Jenkins</li>
                                 <li>GitLab</li>
-                                <li>...</li>
                             </ul>
                             <li>Maintenance</li>
                         </ul>
@@ -137,12 +148,26 @@
                     </ul>
                 </section>
                 <section>
+                    <h3>Étude KeepAlert</h3>
+                    <figure>
+                        <img src="captures/1.png" alt="coucou">
+                        <figcaption>Affichage des captures d'écran</figcaption>
+                    </figure>
+                </section>
+                <section>
+                    <h3>Étude KeepAlert</h3>
+                    <figure>
+                        <img src="captures/2.png" alt="coucou">
+                        <figcaption>Données Whois</figcaption>
+                    </figure>
+                </section>
+                <section>
                     <h3>Les limites</h3>
                     <ul>
                         <li class="fragment">Files de traitements de plusieurs jours</li>
                         <ul>
                             <li class="fragment">Capacités de traitement</li>
-                            <li class="fragment">Passage à l'échelle</li>
+                            <li class="fragment">Taille des études</li>
                         </ul>
                         <li class="fragment">Études incomplètes</li>
                         <li class="fragment">Recherche fulltext</li>
@@ -155,51 +180,71 @@
                     <h2>Le passage au Cloud</h2>
                 </section>
                 <section>
-                    <h3>Des changements induits</h3>
+                    <h3>Pourquoi ?</h3>
                     <ul>
                         <li class="fragment">S'affranchir des limites</li>
                         <li class="fragment">Améliorer l'expérience utilisateur</li>
                     </ul>
                 </section>
                 <section>
-                    <h3>D'un point de vue technique</h3>
+                    <h3>Comment ?</h3>
                     <ul>
                         <li class="fragment">Hadoop</li>
-                        <li class="fragment">Scheduler</li>
                         <li class="fragment">Elasticsearch</li>
                         <li class="fragment">S3</li>
                     </ul>
                 </section>
                 <section>
-                    <h3>Mais aussi pour les utilisateurs</h3>
+                    <figure>
+                        <img src="captures/KA-Cloud.svg" alt="">
+                        <figcaption>Nouvelle architecture Cloud</figcaption>
+                    </figure>
+                </section>
+                <section>
+                    <h3>Quels changements pour les utilisateurs ?</h3>
                     <ul>
-                        <li class="fragment">Utilisation normale similaire mais...</li>
-                        <li class="fragment">...une recherche full-text généralisée</li>
+                        <li class="fragment">Aucune à part...</li>
+                        <ul>
+                            <li class="fragment">Une livraison rapide</li>
+                            <li class="fragment">Des résultats plus complets</li>
+                            <li class="fragment">Recherche full-text généralisée</li>
+                        </ul>
                         <li class="fragment">Nouvelle possibilités en terme de recherche</li>
                     </ul>
+                </section>
+                <section>
+                    <h3>Étude KeepAlert</h3>
+                    <figure>
+                        <img src="captures/3.png" alt="">
+                        <figcaption>Filtres disponibles pour les résultats d'une étude</figcaption>
+                    </figure>
                 </section>
             </section>
             <!--6 minutes-->
             <section>
                 <section>
                     <h2>Résultats</h2>
-                </section>
-                <section>
-                    <h3>L'aspect financier</h3>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
+                    <p class="fragment">Mise en production en Février 2015</p>
                 </section>
                 <!--TODO tableau récap' financier-->
                 <section>
                     <h3>Observations</h3>
                     <ul>
-                        <li class="fragment">Mise en production en Février 2015</li>
                         <li class="fragment">5800 heures EMR en septembre (240 jours)</li>
                         <li class="fragment">1 incident notable depuis mise en production</li>
                         <li class="fragment">Peu de contraintes</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Observations - Elasticsearch</h3>
+                    <figure>
+                        <img src="captures/es.png" alt="">
+                        <figcaption>Un volume plus important que prévu</figcaption>
+                    </figure>
+                </section>
+                <section>
+                    <h3>L'aspect financier</h3>
+                    <ul>
                     </ul>
                 </section>
             </section>
@@ -261,7 +306,6 @@
             }]
         });
     </script>
-
 </body>
 
 </html>
