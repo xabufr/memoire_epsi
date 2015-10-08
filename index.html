@@ -10,7 +10,8 @@
     <meta name="author" content="Hakim El Hattab">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"
+    />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
@@ -232,9 +233,13 @@
                         <li class="fragment">5800 heures EMR en septembre (240 jours)</li>
                         <li class="fragment">1 incident notable depuis mise en production</li>
                         <li class="fragment">Peu de contraintes</li>
-                        <!-- TODO <li class="fragment">S3: Total Objects: 6298168
-   Total Size: 1.4 TiB</li> -->
                     </ul>
+                    <aside class="notes">
+                        <ul>
+                            <li>S3: Total Objects: 6 298 168</li>
+                            <li>Total Size: 1.4 TiB</li>
+                        </ul>
+                    </aside>
                 </section>
                 <section>
                     <h3>Observations - Elasticsearch</h3>
@@ -246,6 +251,60 @@
                 <section>
                     <h3>L'aspect financier</h3>
                     <!-- TODO: Tableau coûts observés / prévisions / ancienne infra-->
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th title="Field #1"></th>
+                                <th title="Field #2">Anc. infra.</th>
+                                <th title="Field #3">Prévisions</th>
+                                <th title="Field #4">Observations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>NDD analysés</td>
+                                <td></td>
+                                <td>6 000 000</td>
+                                <td>15 000 000(+150%)</td>
+                            </tr>
+                            <tr>
+                                <td>Service</td>
+                                <td></td>
+                                <td>Coûts</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>S3</td>
+                                <td></td>
+                                <td>$196,71</td>
+                                <td>$683,04</td>
+                            </tr>
+                            <tr>
+                                <td>EMR+EC2</td>
+                                <td></td>
+                                <td>$3 238,80</td>
+                                <td>$3 580,56</td>
+                            </tr>
+                            <tr>
+                                <td>Data Transfert</td>
+                                <td></td>
+                                <td>$333,15</td>
+                                <td>$43,32</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>Total / an</td>
+                                <td>$3 768,66</td>
+                                <td>$4 306,92</td>
+                            </tr>
+                            <tr>
+                                <td>Taux 31/07/2015</td>
+                                <td>14 500,00 €</td>
+                                <td>3 409,62 €</td>
+                                <td>3 896,60 € (+14%)</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </section>
             </section>
             <section>
@@ -261,7 +320,8 @@
     <script>
         // Full list of configuration options available at:
          // https://github.com/hakimel/reveal.js#configuration
-        Reveal.initialize({
+        Reveal.initialize(
+        {
             controls: true,
             progress: true,
             history: true,
@@ -270,37 +330,48 @@
             transition: 'slide', // none/fade/slide/convex/concave/zoom
 
             // Optional reveal.js plugins
-            dependencies: [{
+            dependencies: [
+            {
                 src: 'lib/js/classList.js',
-                condition: function() {
+                condition: function()
+                {
                     return !document.body.classList;
                 }
-            }, {
+            },
+            {
                 src: 'plugin/markdown/marked.js',
-                condition: function() {
+                condition: function()
+                {
                     return !!document.querySelector(
                         '[data-markdown]');
                 }
-            }, {
+            },
+            {
                 src: 'plugin/markdown/markdown.js',
-                condition: function() {
+                condition: function()
+                {
                     return !!document.querySelector(
                         '[data-markdown]');
                 }
-            }, {
+            },
+            {
                 src: 'plugin/highlight/highlight.js',
                 async: true,
-                condition: function() {
+                condition: function()
+                {
                     return !!document.querySelector(
                         'pre code');
                 },
-                callback: function() {
+                callback: function()
+                {
                     hljs.initHighlightingOnLoad();
                 }
-            }, {
+            },
+            {
                 src: 'plugin/zoom-js/zoom.js',
                 async: true
-            }, {
+            },
+            {
                 src: 'plugin/notes/notes.js',
                 async: true
             }]
