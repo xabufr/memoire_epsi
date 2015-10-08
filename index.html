@@ -52,13 +52,20 @@
         <div class="slides">
             <section>
                 <h3>Migration du système de collecte de données d'une plateforme de surveillance de marques sur internet vers le Cloud d'Amazon</h3>
-                <small>Thomas LOUBIOU - 2015</small>
+                <p><small>Thomas LOUBIOU - 2015</small></p>
+                <p><small>KeepAlert - Prodomaines</small>
+                </p>
             </section>
             <!--3 minutes-->
-            <!--TODO: notes présentateur-->
             <section>
                 <section>
                     <h2>Présentation</h2>
+                    <aside class="notes">
+                        <ul>
+                            <li>Thomas LOUBIOU, promo 2015 EPSI</li>
+                            <li>Alternance à Systonic</li>
+                        </ul>
+                    </aside>
                 </section>
                 <section>
                     <h3>L'entreprise</h3>
@@ -83,7 +90,9 @@
                     </p>
                     <aside class="notes">
                         <ul>
+                            <li>Prodomaines, le secteur dans lequel je travaille</li>
                             <li>Expliquer ce qu'est un NDD</li>
+                            <li>Qui est l'ICANN ?</li>
                         </ul>
                     </aside>
                 </section>
@@ -127,10 +136,10 @@
                     <ul>
                         <li class="fragment">Surveillance de marques sur Internet</li>
                         <ul>
-                            <li class="fragment">Noms de domaines</li>
                             <li class="fragment">Réseaux sociaux</li>
                             <li class="fragment">Contenu similaire</li>
                             <li class="fragment">WebMarker</li>
+                            <li class="fragment">Noms de domaines</li>
                         </ul>
                     </ul>
                 </section>
@@ -146,6 +155,14 @@
                             <li class="fragment">Service juridique</li>
                         </ul>
                     </ul>
+                    <aside class="notes">
+                        <ul>
+                            <li>Qu'es-ce que le cybersquatting</li>
+                            <li>Lister tous les noms de domaine litigieux</li>
+                            <li>Il faut donc récupérer les données liées à ces noms
+                                de domaines</li>
+                        </ul>
+                    </aside>
                 </section>
                 <section>
                     <h3>Étude KeepAlert</h3>
@@ -153,6 +170,9 @@
                         <img src="captures/1.png" alt="coucou">
                         <figcaption>Affichage des captures d'écran</figcaption>
                     </figure>
+                    <aside class="notes">Exemple de vue de la plateforme, présentant la liste des NDD
+                        identifiés. Noter présence des captures d'écran des sites.
+                    </aside>
                 </section>
                 <section>
                     <h3>Étude KeepAlert</h3>
@@ -160,6 +180,9 @@
                         <img src="captures/2.png" alt="coucou">
                         <figcaption>Données Whois</figcaption>
                     </figure>
+                    <aside class="notes">
+                        Vue des données Whois, parsées (il est difficile d'obtenir ces données)
+                    </aside>
                 </section>
                 <section>
                     <h3>Les limites</h3>
@@ -170,8 +193,16 @@
                             <li class="fragment">Taille des études</li>
                         </ul>
                         <li class="fragment">Études incomplètes</li>
-                        <li class="fragment">Recherche fulltext</li>
+                        <li class="fragment">Fonctionnalités</li>
                     </ul>
+                    <aside class="notes">
+                        <ul>
+                            <li>Techniques mises en place inadaptées</li>
+                            <li>Expliquer pk files si longues: capacité de traitement,
+                                taille des études</li>
+                            <li>Proposer de nouvelles fonctionnalités</li>
+                        </ul>
+                    </aside>
                 </section>
             </section>
             <!--6 minutes-->
@@ -182,9 +213,28 @@
                 <section>
                     <h3>Pourquoi ?</h3>
                     <ul>
-                        <li class="fragment">S'affranchir des limites</li>
-                        <li class="fragment">Améliorer l'expérience utilisateur</li>
+                        <div class="fragment">
+                            <li>Une opportunité de:</li>
+                            <ul>
+                                <li>S'affranchir des limites</li>
+                                <li>Améliorer l'expérience utilisateur</li>
+                            </ul>
+                        </div>
+                        <div class="fragment">
+                            <li>Une offre intéressante</li>
+                            <ul>
+                                <li>Adaptée</li>
+                                <li>Pas chère</li>
+                            </ul>
+                        </div>
                     </ul>
+                    <aside class="notes">
+                        <ul>
+                            <li>Adaptée: tarification</li>
+                            <li>Limites: traitement, taille, délais livraison</li>
+                            <li>Expérience utilisateur: délais livraison, full text</li>
+                        </ul>
+                    </aside>
                 </section>
                 <section>
                     <h3>Comment ?</h3>
@@ -193,23 +243,48 @@
                         <li class="fragment">Elasticsearch</li>
                         <li class="fragment">S3</li>
                     </ul>
+                    <aside class="notes">
+                        <ul>
+                            <li>Quelles ont été les technos mises en place ?</li>
+                            <li>Une techno permettant de distribuer des taches sur
+                                un ensemble de machines pour contourner limites
+                                taille/délais, facilement mis en oeuvre dans AWS.
+                            </li>
+                            <li>Stockage des données avec possibilités en termes de
+                                recherche et de volume, scalable</li>
+                            <li>QUID du stockage des captures ? Des backups ?</li>
+                        </ul>
+                    </aside>
                 </section>
                 <section>
                     <figure>
                         <img src="captures/KA-Cloud.svg" alt="">
                         <figcaption>Nouvelle architecture Cloud</figcaption>
                     </figure>
+                    <aside class="notes">Avec ces technos, quelques changements nécessaire dans l'infra.
+                        Apparition d'un scheduler dû au système de tarification
+                        AWS EC2/EMR</aside>
                 </section>
                 <section>
                     <h3>Quels changements pour les utilisateurs ?</h3>
                     <ul>
-                        <li class="fragment">Aucune à part...</li>
+                        <li class="fragment">Aucun<span class="fragment"> à part...</span></li>
                         <ul>
                             <li class="fragment">Une livraison rapide</li>
                             <li class="fragment">Des résultats plus complets</li>
                             <li class="fragment">Recherche full-text généralisée</li>
                         </ul>
                         <li class="fragment">Nouvelle possibilités en terme de recherche</li>
+                        <aside class="notes">
+                            <ul>
+                                <li>Les changements ne doivent pas impacter les utilisateurs
+                                    en mal</li>
+                                <li>Aucune modification dans le comportement de la
+                                    plateforme
+                                </li>
+                                <li>Objectif zéro régression</li>
+                            </ul>
+                        </aside>
                     </ul>
                 </section>
                 <section>
@@ -218,6 +293,15 @@
                         <img src="captures/3.png" alt="">
                         <figcaption>Filtres disponibles pour les résultats d'une étude</figcaption>
                     </figure>
+                    <aside class="notes">
+                        <ul>
+                            <li>Exemple d'amélioration pour les utilisateurs: la généralisation
+                                du full-text</li>
+                            <li>Avant option payante</li>
+                            <li>Car pour nous nécessitait une infra dédiée à l'indexation</li>
+                            <li>Maintenant proposée sans coût supplémentaire pour nous</li>
+                        </ul>
+                    </aside>
                 </section>
             </section>
             <!--6 minutes-->
@@ -226,7 +310,6 @@
                     <h2>Résultats</h2>
                     <p class="fragment">Mise en production en Février 2015</p>
                 </section>
-                <!--TODO tableau récap' financier-->
                 <section>
                     <h3>Observations</h3>
                     <ul>
@@ -236,6 +319,11 @@
                     </ul>
                     <aside class="notes">
                         <ul>
+                            <li>Un volume de traitement plus important que prévu (240
+                                jours/mois)
+                            </li>
+                            <li>Le seul incident n'a pas eu de conséquences, lié aux
+                                SPOT instances(EC2 avec tarification liée à l'offre)</li>
                             <li>S3: Total Objects: 6 298 168</li>
                             <li>Total Size: 1.4 TiB</li>
                         </ul>
@@ -247,10 +335,17 @@
                         <img src="captures/es.png" alt="">
                         <figcaption>Un volume plus important que prévu</figcaption>
                     </figure>
+                    <aside class="notes">
+                        <ul>
+                            <li>150GiB produits en 8 mois, 8.600.000 docs</li>
+                            <li>Cela a forcément un impact sur le coût</li>
+                            <li>Backup réguliers prennent de la place sur S3</li>
+                            <li>Les captures aussi</li>
+                        </ul>
+                    </aside>
                 </section>
                 <section>
                     <h3>L'aspect financier</h3>
-                    <!-- TODO: Tableau coûts observés / prévisions / ancienne infra-->
                     <table border="1">
                         <thead>
                             <tr>
@@ -310,6 +405,17 @@
             <section>
                 <h2>Conclusion</h2>
                 <p class="fragment">Des questions ?</p>
+                <aside class="notes">
+                    <ul>
+                        <li>Expérience très enrichissante</li>
+                        <li>Apprentissage du Cloud AWS</li>
+                        <li>Techno très diverses</li>
+                        <li>Pas seulement du dév, mais également compétences plus orientées
+                            système&amp;réseau
+                        </li>
+                        <li>Professionnelement: opportunité de continuer sur une thèse</li>
+                    </ul>
+                </aside>
             </section>
         </div>
     </div>
