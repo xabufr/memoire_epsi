@@ -10,8 +10,7 @@
     <meta name="author" content="Hakim El Hattab">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"
-    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
@@ -52,7 +51,8 @@
         <div class="slides">
             <section>
                 <h3>Migration du système de collecte de données d'une plateforme de surveillance de marques sur internet vers le Cloud d'Amazon</h3>
-                <p><small>Thomas LOUBIOU - 2015</small></p>
+                <p><small>Thomas LOUBIOU - 2015</small>
+                </p>
                 <p><small>KeepAlert - Prodomaines</small>
                 </p>
             </section>
@@ -77,22 +77,35 @@
                             <li>Nombreuses activités</li>
                         </ul>
                     </p>
+                    <aside class="notes">
+                        <ul>
+                            <li>SAS: Société par Action Simplifiée</li>
+                            <li>+20 salariés</li>
+                            <li>Hébergement</li>
+                            <li>Agence Web</li>
+                        </ul>
+                    </aside>
                 </section>
                 <section>
                     <h3>Prodomaines</h3>
                     <p>
                         <ul>
                             <li>Noms de domaines</li>
-                            <li>Registre agréé ICANN</li>
-                            <li>Surveillence de marques sur Internet - KeepAlert</li>
+                            <li>Bureau d'enregistrement accrédité ICANN</li>
+                            <li>Surveillance de marques sur Internet - KeepAlert</li>
                             <li>Plus d'1M de C.A. en 2014</li>
                         </ul>
                     </p>
                     <aside class="notes">
                         <ul>
                             <li>Prodomaines, le secteur dans lequel je travaille</li>
-                            <li>Expliquer ce qu'est un NDD</li>
+                            <li>Expliquer ce qu'est un NDD (un identifiant dans un domaine, i.e. des ordinateurs reliés à internet partageant des caractéristiques communes)</li>
                             <li>Qui est l'ICANN ?</li>
+                            <ul>
+                                <li>ICANN: Internet Corporation for Assigned Names and Numbers</li>
+                                <li>Registre: AFNIC</li>
+                                <li>Bureau d'enregistrement (registrar)</li>
+                            </ul>
                         </ul>
                     </aside>
                 </section>
@@ -114,7 +127,7 @@
                             <ul>
                                 <li>Indexation d'images</li>
                                 <li>Utilisation du Cloud d'Amazon</li>
-                                <li>Moteur &amp; Infrastructure de scraping</li>
+                                <li>Moteur &amp; Infrastructure de web scraping</li>
                             </ul>
                             <li>Mise en place d'outils d'aide au développement</li>
                             <ul>
@@ -157,10 +170,9 @@
                     </ul>
                     <aside class="notes">
                         <ul>
-                            <li>Qu'es-ce que le cybersquatting</li>
+                            <li>Qu'es ce que le cybersquatting</li>
                             <li>Lister tous les noms de domaine litigieux</li>
-                            <li>Il faut donc récupérer les données liées à ces noms
-                                de domaines</li>
+                            <li>Il faut donc récupérer les données liées à ces noms de domaines</li>
                         </ul>
                     </aside>
                 </section>
@@ -170,8 +182,7 @@
                         <img src="captures/1.png" alt="coucou">
                         <figcaption>Affichage des captures d'écran</figcaption>
                     </figure>
-                    <aside class="notes">Exemple de vue de la plateforme, présentant la liste des NDD
-                        identifiés. Noter présence des captures d'écran des sites.
+                    <aside class="notes">Exemple de vue de la plateforme, présentant la liste des NDD identifiés. Noter présence des captures d'écran des sites.
                     </aside>
                 </section>
                 <section>
@@ -190,7 +201,7 @@
                         <li class="fragment">Files de traitements de plusieurs jours</li>
                         <ul>
                             <li class="fragment">Capacités de traitement</li>
-                            <li class="fragment">Taille des études</li>
+                            <li class="fragment">Taille et nombre d'études</li>
                         </ul>
                         <li class="fragment">Études incomplètes</li>
                         <li class="fragment">Fonctionnalités</li>
@@ -198,10 +209,9 @@
                     <!--TODO image schéma ancienne infra-->
                     <aside class="notes">
                         <ul>
-                            <li>Techniques mises en place inadaptées</li>
-                            <li>Expliquer pk files si longues: capacité de traitement,
-                                taille des études</li>
+                            <li>Techniques mises en place inadaptées à de gros volumes de données</li>
                             <li>Proposer de nouvelles fonctionnalités</li>
+                            <li>Fonctionnalités: recherche full-text payante</li>
                         </ul>
                     </aside>
                 </section>
@@ -231,9 +241,9 @@
                     </ul>
                     <aside class="notes">
                         <ul>
-                            <li>Adaptée: tarification</li>
                             <li>Limites: traitement, taille, délais livraison</li>
                             <li>Expérience utilisateur: délais livraison, full text</li>
+                            <li>Adaptée: Mode de tarification à l'heure</li>
                         </ul>
                     </aside>
                 </section>
@@ -247,12 +257,9 @@
                     <aside class="notes">
                         <ul>
                             <li>Quelles ont été les technos mises en place ?</li>
-                            <li>Une techno permettant de distribuer des taches sur
-                                un ensemble de machines pour contourner limites
-                                taille/délais, facilement mis en oeuvre dans AWS.
+                            <li>Une techno permettant de distribuer des taches sur un ensemble de machines pour contourner limites taille/délais, facilement mis en œuvre dans AWS.
                             </li>
-                            <li>Stockage des données avec possibilités en termes de
-                                recherche et de volume, scalable</li>
+                            <li>Stockage des données avec possibilités en termes de recherche et de volume, scalable</li>
                             <li>QUID du stockage des captures ? Des backups ?</li>
                         </ul>
                     </aside>
@@ -262,26 +269,23 @@
                         <img src="captures/KA-Cloud.svg" alt="">
                         <figcaption>Nouvelle architecture Cloud</figcaption>
                     </figure>
-                    <aside class="notes">Avec ces technos, quelques changements nécessaire dans l'infra.
-                        Apparition d'un scheduler dû au système de tarification
-                        AWS EC2/EMR</aside>
+                    <aside class="notes">Avec ces technos, quelques changements nécessaire dans l'infra. Apparition d'un scheduler dû au système de tarification AWS EC2/EMR</aside>
                 </section>
                 <section>
                     <h3>Quels changements pour les utilisateurs ?</h3>
                     <ul>
-                        <li class="fragment">Aucun<span class="fragment"> à part...</span></li>
+                        <li class="fragment">Aucun<span class="fragment"> à part...</span>
+                        </li>
                         <ul>
                             <li class="fragment">Une livraison rapide</li>
                             <li class="fragment">Des résultats plus complets</li>
                             <li class="fragment">Recherche full-text généralisée</li>
                         </ul>
-                        <li class="fragment">Nouvelle possibilités en terme de recherche</li>
+                        <li class="fragment">Nouvelles possibilités en terme de recherche</li>
                         <aside class="notes">
                             <ul>
-                                <li>Les changements ne doivent pas impacter les utilisateurs
-                                    en mal</li>
-                                <li>Aucune modification dans le comportement de la
-                                    plateforme
+                                <li>Les changements ne doivent pas impacter les utilisateurs en mal</li>
+                                <li>Aucune modification dans le comportement de la plateforme
                                 </li>
                                 <li>Objectif zéro régression</li>
                             </ul>
@@ -296,8 +300,7 @@
                     </figure>
                     <aside class="notes">
                         <ul>
-                            <li>Exemple d'amélioration pour les utilisateurs: la généralisation
-                                du full-text</li>
+                            <li>Exemple d'amélioration pour les utilisateurs: la généralisation du full-text</li>
                             <li>Avant option payante</li>
                             <li>Car pour nous nécessitait une infra dédiée à l'indexation</li>
                             <li>Maintenant proposée sans coût supplémentaire pour nous</li>
@@ -320,12 +323,10 @@
                     </ul>
                     <aside class="notes">
                         <ul>
-                            <li>Un volume de traitement plus important que prévu (240
-                                jours/mois)
+                            <li>Un volume de traitement plus important que prévu (240 jours/mois)
                             </li>
-                            <li>Le seul incident n'a pas eu de conséquences, lié aux
-                                SPOT instances(EC2 avec tarification liée à l'offre)</li>
-                            <li>S3: Total Objects: 6 298 168</li>
+                            <li>Le seul incident n'a pas eu de conséquences, lié aux SPOT instances(EC2 avec tarification liée à l'offre)</li>
+                            <li>Peu de contraintes, exemple d'S3: Total Objects: 6 298 168</li>
                             <li>Total Size: 1.4 TiB</li>
                         </ul>
                     </aside>
@@ -359,7 +360,7 @@
                         <tbody>
                             <tr>
                                 <td>NDD analysés</td>
-                                <td></td>
+                                <td>6 000 000</td>
                                 <td>6 000 000</td>
                                 <td>15 000 000(+150%)</td>
                             </tr>
@@ -372,35 +373,42 @@
                             <tr>
                                 <td>S3</td>
                                 <td></td>
-                                <td>$196,71</td>
-                                <td>$683,04</td>
+                                <td>$200</td>
+                                <td>$680</td>
                             </tr>
                             <tr>
                                 <td>EMR+EC2</td>
                                 <td></td>
-                                <td>$3 238,80</td>
-                                <td>$3 580,56</td>
+                                <td>$3 240</td>
+                                <td>$3 580</td>
                             </tr>
                             <tr>
                                 <td>Data Transfert</td>
                                 <td></td>
-                                <td>$333,15</td>
-                                <td>$43,32</td>
+                                <td>$333</td>
+                                <td>$43</td>
                             </tr>
                             <tr>
                                 <td>Total</td>
                                 <td>Total / an</td>
-                                <td>$3 768,66</td>
-                                <td>$4 306,92</td>
+                                <td>$3 770</td>
+                                <td>$4 300</td>
                             </tr>
                             <tr>
                                 <td>Taux 31/07/2015</td>
                                 <td>14 500,00 €</td>
-                                <td>3 409,62 €</td>
-                                <td>3 896,60 € (+14%)</td>
+                                <td>3 410 € (-76%)</td>
+                                <td>3 900 € (+14%,-73%)</td>
                             </tr>
                         </tbody>
                     </table>
+                    <aside class="notes">
+                        <ul>
+                            <li>Forte hausse de charge de travail</li>
+                            <li>Moins de limites en termes de volume</li>
+                            <li>Des coûts tout de même maîtrisés grâce à certaines optimisations (SPOT)</li>
+                        </ul>
+                    </aside>
                 </section>
             </section>
             <section>
@@ -411,8 +419,7 @@
                         <li>Expérience très enrichissante</li>
                         <li>Apprentissage du Cloud AWS</li>
                         <li>Techno très diverses</li>
-                        <li>Pas seulement du dév, mais également compétences plus orientées
-                            système&amp;réseau
+                        <li>Pas seulement du dév, mais également compétences plus orientées système&amp;réseau
                         </li>
                         <li>Professionnelement: opportunité de continuer sur une thèse</li>
                     </ul>
@@ -427,8 +434,7 @@
     <script>
         // Full list of configuration options available at:
          // https://github.com/hakimel/reveal.js#configuration
-        Reveal.initialize(
-        {
+        Reveal.initialize({
             controls: true,
             progress: true,
             history: true,
@@ -437,48 +443,37 @@
             transition: 'slide', // none/fade/slide/convex/concave/zoom
 
             // Optional reveal.js plugins
-            dependencies: [
-            {
+            dependencies: [{
                 src: 'lib/js/classList.js',
-                condition: function()
-                {
+                condition: function() {
                     return !document.body.classList;
                 }
-            },
-            {
+            }, {
                 src: 'plugin/markdown/marked.js',
-                condition: function()
-                {
+                condition: function() {
                     return !!document.querySelector(
                         '[data-markdown]');
                 }
-            },
-            {
+            }, {
                 src: 'plugin/markdown/markdown.js',
-                condition: function()
-                {
+                condition: function() {
                     return !!document.querySelector(
                         '[data-markdown]');
                 }
-            },
-            {
+            }, {
                 src: 'plugin/highlight/highlight.js',
                 async: true,
-                condition: function()
-                {
+                condition: function() {
                     return !!document.querySelector(
                         'pre code');
                 },
-                callback: function()
-                {
+                callback: function() {
                     hljs.initHighlightingOnLoad();
                 }
-            },
-            {
+            }, {
                 src: 'plugin/zoom-js/zoom.js',
                 async: true
-            },
-            {
+            }, {
                 src: 'plugin/notes/notes.js',
                 async: true
             }]
