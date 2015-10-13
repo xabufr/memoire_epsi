@@ -32,12 +32,31 @@
     <style type="text/css">
         figure {
             max-height: 95%;
-            max-width: 95%;
+            max-width: 100%;
+            padding: 0;
         }
         figcaption {
             background: rgba(0, 0, 0, 0.75);
             color: white;
-            padding: 10px 20px;
+            border-radius: 25px;
+            position: relative;
+            top: -25px;
+        }
+        section {
+            background-color: rgba(34, 34, 34, 0.9);
+            border-radius: 25px;
+            padding: 0;
+        }
+        img {
+            border-radius: 25px;
+            margin: 0;
+            padding: 0;
+        }
+        h2, h3 {
+            border-radius: 25px 25px 0 0;
+            background-color: rgba(0, 0,  0, 0.75);
+            position: relative;
+            top: -20px;
         }
     </style>
 
@@ -49,7 +68,7 @@
 <body>
     <div class="reveal">
         <div class="slides">
-            <section>
+            <section data-background="./captures/bureau_en_ligne.jpg">
                 <h3>Migration du système de collecte de données d'une plateforme de surveillance de marques sur internet vers le Cloud d'Amazon</h3>
                 <p><small>Thomas LOUBIOU - 2015</small>
                 </p>
@@ -57,7 +76,7 @@
                 </p>
             </section>
             <!--3 minutes-->
-            <section>
+            <section data-background="./captures/datacenter_1.jpg">
                 <!--TODO Dégager slides vides-->
                 <section>
                     <h3>Systonic</h3>
@@ -90,7 +109,7 @@
                 </section>
             </section>
             <!--6 minutes-->
-            <section>
+            <section data-background="./captures/1391003361-og.jpg">
                 <section>
                     <h2>KeepAlert</h2>
                     <figure>
@@ -160,7 +179,7 @@
                 </section>
             </section>
             <!--6 minutes-->
-            <section>
+            <section data-background="./captures/cloud-reflections-in-water-15881-1920x1080.jpg">
                 <section>
                     <h3>Le passage au Cloud</h3>
                     <!--TODO Reformuler, illustrer-->
@@ -238,9 +257,9 @@
                 </section>
             </section>
             <!--6 minutes-->
-            <section>
-                <section>
-                    <h2>Résultats</h2>
+            <section data-background="./captures/Stock-Image-12.jpeg">
+                <section data-background="./captures/visite-google-datacenter-14.jpg">
+                    <h2>Conclusion</h2>
                     <p>Mise en production en Février 2015</p>
                 </section>
                 <section>
@@ -251,7 +270,7 @@
                                 <th title="Field #1"></th>
                                 <th title="Field #2">Anc. infra.</th>
                                 <th title="Field #3">Prévisions</th>
-                                <th title="Field #4">Observations</th>
+                                <th class="fragment" data-fragment-index="2" title="Field #4">Observations</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -259,51 +278,51 @@
                                 <td>#NDD</td>
                                 <td>6 000 000</td>
                                 <td>6 000 000</td>
-                                <td>15 000 000<small>(+150%)</small>
+                                <td class="fragment" data-fragment-index="2">15 000 000<small>(+150%)</small>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Service</td>
                                 <td></td>
                                 <td>Coûts</td>
-                                <td></td>
+                                <td class="fragment" data-fragment-index="2"></td>
                             </tr>
                             <tr>
                                 <td>S3</td>
                                 <td></td>
                                 <td>$200</td>
-                                <td>$680</td>
+                                <td class="fragment" data-fragment-index="2">$680</td>
                             </tr>
                             <tr>
                                 <td>EMR+EC2</td>
                                 <td></td>
                                 <td>$3 240</td>
-                                <td>$3 580</td>
+                                <td class="fragment" data-fragment-index="2">$3 580</td>
                             </tr>
                             <tr>
-                                <td>Data Transfert</td>
+                                <td>Data Transfert</td>
                                 <td></td>
                                 <td>$333</td>
-                                <td>$43</td>
+                                <td class="fragment" data-fragment-index="2">$43</td>
                             </tr>
                             <tr>
                                 <td>Total</td>
                                 <td>Total / an</td>
                                 <td>$3 770</td>
-                                <td>$4 300</td>
+                                <td class="fragment" data-fragment-index="2">$4 300</td>
                             </tr>
                             <tr>
                                 <td><small>Taux (31/07/2015)</small>
                                 </td>
                                 <td>14 500,00 €</td>
-                                <td>3 410 € <small>(-76%)</small>
+                                <td>3 410 €<small> (-76%)</small>
                                 </td>
-                                <td>3 900 € <small>(+14%,-73%)</small>
+                                <td class="fragment" data-fragment-index="2">3 900 € <small>(+14%,-73%)</small>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <aside class="notes">
+                    <aside class="notes ">
                         <ul>
                             <li>Forte hausse de charge de travail</li>
                             <li>Moins de limites en termes de volume</li>
@@ -314,11 +333,11 @@
                     </aside>
                 </section>
             </section>
-            <section>
+            <section data-background="./captures/bilan-personnel-stage.jpg">
                 <!--TODO refacto bilan-->
-                <h2>Conclusion</h2>
-                <p class="fragment">Des questions ?</p>
-                <aside class="notes">
+                <h2>Bilan</h2>
+                <p class="fragment ">Des questions ?</p>
+                <aside class="notes ">
                     <ul>
                         <li>Sous-projet complexe terminé, autres modules en cours de traitement</li>
                         <li>Totalement fonctionnel</li>
@@ -346,8 +365,8 @@
         </div>
     </div>
 
-    <script src="lib/js/head.min.js"></script>
-    <script src="js/reveal.js"></script>
+    <script src="lib/js/head.min.js "></script>
+    <script src="js/reveal.js "></script>
 
     <script>
         // Full list of configuration options available at:
